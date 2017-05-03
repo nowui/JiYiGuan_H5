@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html style="font-size: 100px;">
+<head>
+  <meta charset="UTF-8">
+  <title>济颐馆</title>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="format-detection" content="email=no"/>
+  <script>
+    window.isPC = true;
+
+    if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+      window.isPC = false;
+    }
+
+    !function (e) {
+      function t(a) {
+        if (i[a])return i[a].exports;
+        var n = i[a] = {exports: {}, id: a, loaded: !1};
+        return e[a].call(n.exports, n, n.exports, t), n.loaded = !0, n.exports
+      }
+
+      var i = {};
+      return t.m = e, t.c = i, t.p = "", t(0)
+    }([function (e, t) {
+      "use strict";
+      Object.defineProperty(t, "__esModule", {value: !0});
+      var i = window;
+      t["default"] = i.flex = function (e, t) {
+        var a = e || 100, n = t || 1, r = i.document, o = navigator.userAgent,
+          d = o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i), l = o.match(/U3\/((\d+|\.){5,})/i),
+          c = l && parseInt(l[1].split(".").join(""), 10) >= 80, p = navigator.appVersion.match(/(iphone|ipad|ipod)/gi),
+          s = 2;
+        p || d && d[1] > 534 || c || (s = 1);
+        var u = 1 / s, m = r.querySelector('meta[name="viewport"]');
+        m || (m = r.createElement("meta"), m.setAttribute("name", "viewport"), r.head.appendChild(m)), m.setAttribute("content", "width=device-width,user-scalable=no,initial-scale=" + u + ",maximum-scale=" + u + ",minimum-scale=" + u), r.documentElement.style.fontSize = a / 2 * s * n + "px"
+      }, e.exports = t["default"]
+    }]);
+    flex(100, 1);
+  </script>
+  <style>
+    #root {
+      margin: 0 auto;
+      background: #ffffff;
+    }
+
+    .am-tab-bar-bar {
+      left: 0;
+    }
+
+    .am-icon-left {
+      width: 75px !important;
+      height: 75px !important;
+    }
+
+    .am-navbar-left {
+      padding-left: 0 !important;
+      padding-right: 0.3rem !important;
+    }
+
+    .am-navbar-left-icon {
+      margin-right: -16px !important;
+    }
+
+    #loading {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      background: #ffffff;
+    }
+
+    .progress {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -12px;
+      margin-left: -100px;
+      width: 200px;
+      background: #a72025;
+      padding: 3px;
+      overflow: visible;
+      border-radius: 20px;
+    }
+
+    .progress .progress-bar {
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .progress-bar-info {
+      width: 10%;
+      height: 5px;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<div id="loading">
+  <div class="progress">
+    <div id="progressBar" class="progress-bar progress-bar-info"></div>
+  </div>
+</div>
+
+</body>
+</html>
+<script src="preloadjs-0.6.2.min.js"></script>
+<script type="text/javascript">
+  var manifest = [{
+    src: "index.css",
+    id: "index.css"
+  }, {
+    src: "index.js",
+    id: "index.js"
+  }];
+
+  var preload = new createjs.LoadQueue();
+  preload.loadManifest(manifest);
+  preload.on('progress', handleProgress);
+  preload.on('complete', handComplete);
+
+  function handleProgress(event) {
+    var progressBar = document.getElementById("progressBar");
+    if (progressBar != null) {
+      document.getElementById("progressBar").style.width = preload.progress * 100 + "%";
+    }
+  }
+
+  function handComplete() {
+
+  }
+</script>
+
