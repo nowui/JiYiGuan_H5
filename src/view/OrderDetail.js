@@ -131,7 +131,7 @@ class OrderDetail extends Component {
                 return (
                   <Item key={item.product_id} extra={'￥' + (item.product_quantity * item.product_price).toFixed(2)}>
                     <img className={style.productListImage}
-                         src={constant.host + JSON.parse(item.product_image)[0]}/>
+                         src={constant.host + item.product_image_file}/>
                     <div className={style.productListText}>
                       {item.product_name}
                       <div>× {item.product_quantity}</div>

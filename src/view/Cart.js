@@ -184,7 +184,7 @@ class Cart extends Component {
                     }} onChange={this.handleChangeItem.bind(this, item)}>
                     </CheckboxItem>
                     <img className={style.cartProductListImage}
-                         src={constant.host + item.product_image}/>
+                         src={constant.host + item.product_image_file}/>
                     <div className={style.cartProductListText}>
                       {item.product_name}
                       {

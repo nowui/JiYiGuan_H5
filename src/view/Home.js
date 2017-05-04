@@ -54,7 +54,7 @@ class Home extends Component {
       },
       success: function (data) {
         for (let i = 0; i < data.length; i++) {
-          data[i].product_image_original = constant.host + JSON.parse(data[i].product_image_original);
+          data[i].product_image_file = constant.host + data[i].product_image_file;
         }
 
         this.props.dispatch({
@@ -123,7 +123,7 @@ class Home extends Component {
                     width: (document.documentElement.clientWidth - 25) / 2 + 'px',
                     height: (document.documentElement.clientWidth - 25) / 2 + 'px'
                   }}
-                       src={item.product_image_original}/>
+                       src={item.product_image_file}/>
                   <div className={style.productCardName}>{item.product_name}</div>
                   <div className={style.productCardPrice}>¥{item.product_price}</div>
                 </div>

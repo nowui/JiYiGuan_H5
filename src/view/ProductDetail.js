@@ -18,10 +18,11 @@ class ProductDetail extends Component {
       cart_count: database.getCartList().length,
       product_quantity: 1,
       product: {
-        product_image: [],
-        product_image_list: [],
+        product_image_file: '',
+        product_image_file_list: [],
         product_price: [],
-        product_stock: 0
+        product_stock: 0,
+        sku_id: ''
       }
     }
   }
@@ -41,14 +42,18 @@ class ProductDetail extends Component {
         product_id: this.props.params.product_id
       },
       success: function (data) {
-        data.product_image_list = JSON.parse(data.product_image_list_original);
-        data.product_image = JSON.parse(data.product_image);
-        data.product_price = JSON.parse(data.sku_list[0].product_price);
-        data.product_stock = data.sku_list[0].product_stock;
-        data.sku_id = data.sku_list[0].sku_id;
-
         this.setState({
-          product: data
+          product: {
+            product_id: data.product_id,
+            product_name: data.product_name,
+            product_image_file: data.product_image_file,
+            product_image_file_list: data.product_image_file_list,
+            product_price: JSON.parse(data.sku_list[0].product_price),
+            product_quantity: data.product_quantity,
+            product_stock: data.sku_list[0].product_stock,
+            sku_id: data.sku_list[0].sku_id,
+            product_content: data.product_content
+          }
         });
       }.bind(this),
       complete: function () {
@@ -78,7 +83,7 @@ class ProductDetail extends Component {
       database.addCart({
         product_id: this.state.product.product_id,
         product_name: this.state.product.product_name,
-        product_image: this.state.product.product_image[0],
+        product_image_file: this.state.product.product_image_file,
         product_price: this.state.product.product_price,
         product_quantity: this.state.product_quantity,
         product_stock: this.state.product.product_stock,
@@ -92,7 +97,7 @@ class ProductDetail extends Component {
       database.setProduct([{
         product_id: this.state.product.product_id,
         product_name: this.state.product.product_name,
-        product_image: this.state.product.product_image[0],
+        product_image_file: this.state.product.product_image_file,
         product_price: this.state.product.product_price,
         product_quantity: this.state.product_quantity,
         sku_id: this.state.product.sku_id
@@ -118,7 +123,7 @@ class ProductDetail extends Component {
     database.addCart({
       product_id: this.state.product.product_id,
       product_name: this.state.product.product_name,
-      product_image: this.state.product.product_image[0],
+      product_image_file: this.state.product.product_image_file,
       product_price: this.state.product.product_price,
       product_quantity: this.state.product_quantity,
       product_stock: this.state.product.product_stock,
@@ -147,7 +152,7 @@ class ProductDetail extends Component {
     database.setProduct([{
       product_id: this.state.product.product_id,
       product_name: this.state.product.product_name,
-      product_image: this.state.product.product_image[0],
+      product_image_file: this.state.product.product_image_file,
       product_price: this.state.product.product_price,
       product_quantity: this.state.product_quantity,
       sku_id: this.state.product.sku_id
@@ -178,12 +183,12 @@ class ProductDetail extends Component {
         >商品详情</NavBar>
         <div className={style.page}>
           {
-            this.state.product.product_image_list.length == 0 ?
+            this.state.product.product_image_file_list.length == 0 ?
               ''
               :
-              <Carousel autoplay={true} infinite={true} style={{height: document.documentElement.clientWidth + 'px'}}>
+              <Carousel autoplay={this.state.product.product_image_file_list.length > 1} infinite={this.state.product.product_image_file_list.length > 1} style={{height: document.documentElement.clientWidth + 'px'}}>
                 {
-                  this.state.product.product_image_list.map(function (item, index) {
+                  this.state.product.product_image_file_list.map(function (item, index) {
                     return (
                       <img key={index} style={{width: document.documentElement.clientWidth + 'px', height: document.documentElement.clientWidth + 'px'}} src={constant.host + item}/>
                     )

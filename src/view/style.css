@@ -300,6 +300,7 @@ body, html {
 }
 
 .checkTotal {
+  position: relative;
   float: left;
   width: 70%;
   height: 100px;
@@ -313,7 +314,9 @@ body, html {
 }
 
 .checkTotalCartText {
-  text-align: right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
   padding-right: 20px;
   line-height: 100px;
   color: #c81623;
