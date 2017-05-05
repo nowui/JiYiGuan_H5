@@ -2,7 +2,7 @@ import constant from '../util/constant';
 
 export default {
 
-  namespace: 'delivery',
+  namespace: 'amount',
 
   state: {
     is_load: false,

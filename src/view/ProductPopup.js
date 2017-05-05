@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {List, Popup, Stepper} from 'antd-mobile';
+import React, { Component } from 'react';
+import { List, Popup, Stepper } from 'antd-mobile';
 
 import constant from '../util/constant';
 import style from './style.css';
@@ -9,8 +9,8 @@ class ProductPopup extends Component {
     super(props);
 
     this.state = {
-      product_quantity: this.props.product_quantity
-    }
+      product_quantity: this.props.product_quantity,
+    };
   }
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class ProductPopup extends Component {
 
   handleChange(product_quantity) {
     this.setState({
-      product_quantity: product_quantity
+      product_quantity,
     });
 
     this.props.handleChange(product_quantity);
@@ -40,25 +40,26 @@ class ProductPopup extends Component {
       <div className={style.productPopup}>
         <div className={style.productPopupHeader}>
           <div className={style.productPopupImage}>
-            <img className={style.productCardImage} src={constant.host + this.props.product_image}/>
+            <img className={style.productCardImage} src={constant.host + this.props.product_image} />
           </div>
           <div className={style.productPopupText}>
             <span>{this.props.product_name}</span>
-            <br/>
+            <br />
             <span className={style.productPopupRedText}>￥{this.props.product_price}</span>
           </div>
         </div>
         <List className={style.productPopupContent}>
-          <List.Item extra={
-            <Stepper
-              style={{width: '100%', minWidth: '2rem'}}
-              showNumber={false}
-              max={this.props.product_stock}
-              min={1}
-              defaultValue={this.state.product_quantity}
-              onChange={this.handleChange.bind(this)}
-              useTouch={!window.isPC}
-            />}
+          <List.Item
+            extra={
+              <Stepper
+                style={{ width: '100%', minWidth: '2rem' }}
+                showNumber={false}
+                max={this.props.product_stock}
+                min={1}
+                defaultValue={this.state.product_quantity}
+                onChange={this.handleChange.bind(this)}
+                useTouch={!window.isPC}
+              />}
           >
             购买数量
           </List.Item>
@@ -79,7 +80,7 @@ ProductPopup.propTypes = {
   product_quantity: React.PropTypes.number.isRequired,
   product_stock: React.PropTypes.number.isRequired,
   handleChange: React.PropTypes.func.isRequired,
-  handleSubmit: React.PropTypes.func.isRequired
+  handleSubmit: React.PropTypes.func.isRequired,
 };
 
 ProductPopup.defaultProps = {

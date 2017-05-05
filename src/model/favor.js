@@ -9,13 +9,13 @@ export default {
     list: [],
     total: 0,
     page_index: 1,
-    page_size: constant.page_size
+    page_size: constant.page_size,
   },
 
   reducers: {
     fetch(state, action) {
       return { ...state, ...action.data };
-    }
-  }
+    },
+  },
 
 };

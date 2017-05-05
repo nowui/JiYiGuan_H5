@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
+import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 
-import {TabBar} from 'antd-mobile';
+import { TabBar } from 'antd-mobile';
 
 import database from '../util/database';
 
@@ -12,8 +12,8 @@ class Main extends Component {
 
     this.state = {
       selectedTab: this.props.routes[2].path,
-      cart_count: database.getCartList().length
-    }
+      cart_count: database.getCartList().length,
+    };
   }
 
   componentDidMount() {
@@ -26,26 +26,26 @@ class Main extends Component {
 
   handlePress(tab) {
     this.setState({
-      selectedTab: tab
+      selectedTab: tab,
     });
 
     this.props.dispatch(routerRedux.push({
-      pathname: '/' + tab,
-      query: {}
+      pathname: `/${tab}`,
+      query: {},
     }));
   }
 
   handlCart() {
     this.setState({
-      cart_count: database.getCartList().length
+      cart_count: database.getCartList().length,
     });
   }
 
   render() {
     const childrenWithProps = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, {
-        handlCart: this.handlCart.bind(this)
-      })
+      child => React.cloneElement(child, {
+        handlCart: this.handlCart.bind(this),
+      }),
     );
 
     return (
@@ -63,8 +63,7 @@ class Main extends Component {
             selectedIcon={require('../assets/svg/home_active.svg')}
             selected={this.state.selectedTab === 'home'}
             onPress={this.handlePress.bind(this, 'home')}
-          >
-          </TabBar.Item>
+          />
           <TabBar.Item
             title="购物车"
             key="cart"
@@ -73,17 +72,15 @@ class Main extends Component {
             selectedIcon={require('../assets/svg/cart_active.svg')}
             selected={this.state.selectedTab === 'cart'}
             onPress={this.handlePress.bind(this, 'cart')}
-          >
-          </TabBar.Item>
+          />
           <TabBar.Item
             title="个人"
-            key="mine"
-            icon={require('../assets/svg/mine.svg')}
-            selectedIcon={require('../assets/svg/mine_active.svg')}
-            selected={this.state.selectedTab === 'mine'}
-            onPress={this.handlePress.bind(this, 'mine')}
-          >
-          </TabBar.Item>
+            key="my"
+            icon={require('../assets/svg/my.svg')}
+            selectedIcon={require('../assets/svg/my_active.svg')}
+            selected={this.state.selectedTab === 'my'}
+            onPress={this.handlePress.bind(this, 'my')}
+          />
         </TabBar>
         {childrenWithProps}
       </div>
@@ -93,4 +90,4 @@ class Main extends Component {
 
 Main.propTypes = {};
 
-export default connect(({}) => ({}))(Main);
+export default connect(() => ({}))(Main);

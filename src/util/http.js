@@ -1,72 +1,80 @@
 import fetch from 'dva/fetch';
-import {Toast} from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 
 import constant from './constant';
 import database from './database';
 
 const operation = (promise) => {
-    let hasCanceled_ = false;
-    const wrappedPromise = new Promise((resolve, reject) => {
-        promise.then((val) =>
-            hasCanceled_ ? reject({isCanceled: true}) : resolve(val)
+  let hasCanceled_ = false;
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then(val =>
+            hasCanceled_ ? reject({ isCanceled: true }) : resolve(val),
         );
-        promise.catch((error) =>
-            hasCanceled_ ? reject({isCanceled: true}) : reject(error)
+    promise.catch(error =>
+            hasCanceled_ ? reject({ isCanceled: true }) : reject(error),
         );
-    });
-    return {
-        promise: wrappedPromise,
-        cancel() {
-            hasCanceled_ = true;
-        },
-    };
+  });
+  return {
+    promise: wrappedPromise,
+    cancel() {
+      hasCanceled_ = true;
+    },
+  };
 };
 
 export default function http(config) {
-    const request = operation(fetch(constant.host + config.url, {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Token': database.getToken(),
-            'Platform': constant.platform,
-            'Version': constant.version
-        },
-        method: 'POST',
-        mode: 'cors',
-        body: JSON.stringify(config.data)
-    }));
+  const request = operation(fetch(constant.host + config.url, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Token: database.getToken(),
+      Platform: constant.platform,
+      Version: constant.version,
+    },
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify(config.data),
+  }));
 
-    return {
-        post() {
-            Toast.loading("加载中..", 0);
+  return {
+    post() {
+      if (typeof(config.is_toast) == 'undefined') {
+        config.is_toast = true;
+      }
 
-            request.promise.then(function (response) {
-                if (response.status !== 200) {
-                    return;
-                }
-                response.json().then(function (json) {
-                    if (json.code == 200) {
-                        Toast.hide();
+      if (config.is_toast) {
+        Toast.loading('加载中..', 0);
+      }
 
-                        config.success(json.data);
-                    } else {
-                        Toast.fail(json.message, constant.duration);
-                    }
+      request.promise.then((response) => {
+        if (response.status !== 200) {
+          return;
+        }
+        response.json().then((json) => {
+          if (json.code == 200) {
+            if (config.is_toast) {
+              Toast.hide();
+            }
 
-                    config.complete();
-                });
-            }).catch(function (error) {
-                Toast.fail(constant.error, constant.duration);
+            config.success(json.data);
+          } else {
+            Toast.fail(json.message, constant.duration);
+          }
 
-                setTimeout(function () {
-                    config.complete();
-                }.bind(this), constant.timeout);
-            });
+          config.complete();
+        });
+      }).catch((error) => {
+        Toast.fail(constant.error, constant.duration);
 
-            return request;
-        },
-        cancel() {
-            request.cancel();
-        },
-    };
+        setTimeout(() => {
+          config.complete();
+        }, constant.timeout);
+      });
+
+      return request;
+    },
+    cancel() {
+      request.cancel();
+    },
+  };
 }

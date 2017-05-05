@@ -9,19 +9,19 @@ import database from '../util/database';
 import http from '../util/http';
 import style from './style.css';
 
-class FavorIndex extends Component {
+class TeamIndex extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       is_load: false,
       is_list: false,
-      favor_id: '',
+      team_id: '',
     };
   }
 
   componentDidMount() {
-    // this.handleLoad();
+    this.handleLoad();
   }
 
   componentWillUnmount() {
@@ -30,14 +30,14 @@ class FavorIndex extends Component {
 
   handleLoad() {
     http({
-      url: '/favor/list',
+      url: '/member/team/list',
       data: {
         page_index: 1,
         page_size: 10,
       },
       success: function (data) {
         this.props.dispatch({
-          type: 'favor/fetch',
+          type: 'team/fetch',
           data: {
             list: data,
           },
@@ -58,42 +58,50 @@ class FavorIndex extends Component {
     }));
   }
 
-  handleEdit(favor_id) {
+  handleEdit(team_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: `/favor/edit/${this.props.params.type}/${favor_id}`,
+      pathname: `/team/edit/${this.props.params.type}/${team_id}`,
       query: {},
     }));
   }
 
-  handleChange(favor) {
-    this.setState({
-      favor_id: favor.favor_id,
-    });
+  handleClick(member_id) {
 
-    database.setFavor(favor);
-
-    setTimeout(() => {
-      this.handleBack();
-    }, 300);
   }
 
   render() {
     const Item = List.Item;
-    const CheckboxItem = Checkbox.CheckboxItem;
 
     return (
       <div>
         <NavBar
           className={style.header} mode="light" leftContent="返回"
           onLeftClick={this.handleBack.bind(this)}
-        >我的收藏</NavBar>
+        >我的团队</NavBar>
         <div className={style.page}>
           <WhiteSpace size="lg" />
           <List>
-            <Result
-              img={<img src={require('../assets/svg/empty.svg')} style={{ width: '1.2rem', height: '1.2rem' }} />}
-              message={constant.empty}
-            />
+            {
+              this.props.team.list.map((item) => {
+                return (
+                  <Item
+                    wrap key={item.member_id}
+                    onClick={this.handleClick.bind(this, item.member_id)}
+                  >
+                    {item.member_name}
+                  </Item>
+                );
+              })
+            }
+            {
+              this.state.is_load && this.props.team.list.length == 0 ?
+                <Result
+                  img={<img src={require('../assets/svg/empty.svg')} style={{ width: '1.2rem', height: '1.2rem' }} />}
+                  message={constant.empty}
+                />
+                :
+                ''
+            }
           </List>
         </div>
       </div>
@@ -101,6 +109,6 @@ class FavorIndex extends Component {
   }
 }
 
-FavorIndex.propTypes = {};
+TeamIndex.propTypes = {};
 
-export default connect(({ favor }) => ({ favor }))(FavorIndex);
+export default connect(({ team }) => ({ team }))(TeamIndex);

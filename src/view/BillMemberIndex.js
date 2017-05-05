@@ -8,14 +8,13 @@ import constant from '../util/constant';
 import http from '../util/http';
 import style from './style.css';
 
-class BillIndex extends Component {
+class BillMember extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       is_load: false,
-      is_list: false,
-      team_id: '',
+      list: []
     }
   }
 
@@ -29,17 +28,15 @@ class BillIndex extends Component {
 
   handleLoad() {
     http({
-      url: '/bill/list',
+      url: '/bill/member/list',
       data: {
+        member_id: this.props.params.member_id,
         page_index: 0,
         page_size: 0
       },
       success: function (data) {
-        this.props.dispatch({
-          type: 'bill/fetch',
-          data: {
-            list: data
-          }
+        this.setState({
+          list: data
         });
       }.bind(this),
       complete: function () {
@@ -52,7 +49,7 @@ class BillIndex extends Component {
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/my',
+      pathname: '/team/index',
       query: {}
     }));
   }
@@ -69,12 +66,12 @@ class BillIndex extends Component {
       <div>
         <NavBar className={style.header} mode="light" leftContent="返回"
                 onLeftClick={this.handleBack.bind(this)}
-        >我的账单</NavBar>
+        >他的账单</NavBar>
         <div className={style.page}>
           <WhiteSpace size="lg"/>
           <List>
             {
-              this.props.bill.list.map(function (item) {
+              this.state.list.map(function (item) {
                 return (
                   <Item wrap key={item.bill_id}
                         onClick={this.handleClick.bind(this, item.bill_id)}>
@@ -84,7 +81,7 @@ class BillIndex extends Component {
               }.bind(this))
             }
             {
-              this.state.is_load && this.props.bill.list.length == 0 ?
+              this.state.is_load && this.state.list.length == 0 ?
                 <Result
                   img={<img src={require('../assets/svg/empty.svg')} style={{width: '1.2rem', height: '1.2rem'}}/>}
                   message={constant.empty}
@@ -99,6 +96,6 @@ class BillIndex extends Component {
   }
 }
 
-BillIndex.propTypes = {};
+BillMember.propTypes = {};
 
-export default connect(({bill}) => ({bill}))(BillIndex);
+export default connect(() => ({}))(BillMember);

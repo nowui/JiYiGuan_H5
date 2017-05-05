@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {createForm} from 'rc-form';
-import {Toast, NavBar, List, InputItem, Button, Popup} from 'antd-mobile';
+import React, { Component } from 'react';
+import { createForm } from 'rc-form';
+import { Toast, NavBar, List, InputItem, Button, Popup } from 'antd-mobile';
 
 import constant from '../util/constant';
 import database from '../util/database';
@@ -11,7 +11,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
   componentDidMount() {
@@ -43,37 +43,39 @@ class Login extends Component {
             database.setUserName(data.user_name);
             database.setUserAvatar(data.user_avatar);
 
-            setTimeout(function () {
+            setTimeout(() => {
               this.props.handleLoginSucess();
 
               Popup.hide();
-            }.bind(this), constant.timeout);
+            }, constant.timeout);
           }.bind(this),
-          complete: function () {
+          complete() {
 
-          }.bind(this)
+          },
         }).post();
       }
     });
   }
 
   render() {
-    const {getFieldProps, getFieldError} = this.props.form;
+    const { getFieldProps, getFieldError } = this.props.form;
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}
-                rightContent={[<div onClick={this.handleClose.bind(this)} key='close'>关闭</div>]}>用户登录</NavBar>
+        <NavBar
+          className={style.header} mode="light" iconName={false}
+          rightContent={[<div onClick={this.handleClose.bind(this)} key="close">关闭</div>]}
+        >用户登录</NavBar>
         <div className={style.login}>
-          <form style={{margin: '50px 10px 0px 10px'}}>
+          <form style={{ margin: '50px 10px 0px 10px' }}>
             <List>
               <InputItem
                 {...getFieldProps('user_phone', {
                   rules: [{
                     required: true,
-                    message: '请输入帐号'
+                    message: '请输入帐号',
                   }],
-                  initialValue: ''
+                  initialValue: '',
                 })}
                 error={!!getFieldError('user_phone')}
                 clear
@@ -83,9 +85,9 @@ class Login extends Component {
                 {...getFieldProps('user_password', {
                   rules: [{
                     required: true,
-                    message: '请输入密码'
+                    message: '请输入密码',
                   }],
-                  initialValue: ''
+                  initialValue: '',
                 })}
                 error={!!getFieldError('user_password')}
                 clear
@@ -94,12 +96,12 @@ class Login extends Component {
               >密码</InputItem>
             </List>
           </form>
-          <div style={{margin: '50px 10px 0px 10px'}}>
+          <div style={{ margin: '50px 10px 0px 10px' }}>
             <Button type="primary" onClick={this.handleSubmit.bind(this)}>确定</Button>
           </div>
-          {/*<div style={{margin: '20px 10px 0px 10px'}}>*/}
-          {/*<div style={{textAlign: 'right'}} onClick={this.handleRegister.bind(this)}>免费注册</div>*/}
-          {/*</div>*/}
+          {/* <div style={{margin: '20px 10px 0px 10px'}}>*/}
+          {/* <div style={{textAlign: 'right'}} onClick={this.handleRegister.bind(this)}>免费注册</div>*/}
+          {/* </div>*/}
         </div>
       </div>
     );
@@ -109,12 +111,12 @@ class Login extends Component {
 Login.propTypes = {
   type: React.PropTypes.string,
   data: React.PropTypes.string,
-  handleLoginSucess: React.PropTypes.func.isRequired
+  handleLoginSucess: React.PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {
   type: 'NORMAL',
-  data: ''
+  data: '',
 };
 
 Login = createForm()(Login);

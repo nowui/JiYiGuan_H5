@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
-import {createForm} from 'rc-form';
+import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import { createForm } from 'rc-form';
 
-import {Toast, NavBar, WhiteSpace, List, TextareaItem, Popup, Modal} from 'antd-mobile';
+import { Toast, NavBar, WhiteSpace, List, TextareaItem, Popup, Modal } from 'antd-mobile';
 
 import Login from './Login';
 
@@ -25,14 +25,13 @@ class OrderCheck extends Component {
       delivery: {
         delivery_name: '',
         delivery_phone: '',
-        delivery_address: ''
+        delivery_address: '',
       },
       product_list: [],
       productTotal: 0,
       freight: 0,
-      total: 0
-    }
-
+      total: 0,
+    };
   }
 
   componentDidMount() {
@@ -41,14 +40,14 @@ class OrderCheck extends Component {
     http({
       url: '/order/check',
       data: {
-        product_list: []
+        product_list: [],
       },
       success: function (data) {
-        let is_pay = true;
-        let is_delivery = false;
-        let product_list = database.getProduct();
-        let freight = 0;
-        let total = 0;
+        var is_pay = true;
+        var is_delivery = false;
+        var product_list = database.getProduct();
+        var freight = 0;
+        var total = 0;
 
         if (data.delivery_name == '') {
           is_pay = false;
@@ -56,34 +55,34 @@ class OrderCheck extends Component {
           alert('提示', '您还没有收货地址，是否新建一个？', [
             {
               text: '取消',
-              onPress: function () {
+              onPress() {
 
-              }
+              },
             },
             {
               text: '确定',
               onPress: function () {
                 this.props.dispatch(routerRedux.push({
-                  pathname: '/delivery/index/order_check_' + this.props.params.type,
-                  query: {}
+                  pathname: `/delivery/index/order_check_${this.props.params.type}`,
+                  query: {},
                 }));
-              }.bind(this)
+              }.bind(this),
             },
           ]);
         } else {
           is_delivery = true;
         }
 
-        let delivery = {
+        const delivery = {
           delivery_name: data.delivery_name,
           delivery_phone: data.delivery_phone,
-          delivery_address: data.delivery_address
-        }
+          delivery_address: data.delivery_address,
+        };
 
-        for (let i = 0; i < product_list.length; i++) {
-          let product = product_list[i];
+        for (var i = 0; i < product_list.length; i++) {
+          const product = product_list[i];
 
-          let product_total_price = product.product_quantity * product.product_price[0].product_price;
+          const product_total_price = product.product_quantity * product.product_price[0].product_price;
 
           product.product_total_price = product_total_price.toFixed(2);
           total += product_total_price;
@@ -94,17 +93,17 @@ class OrderCheck extends Component {
         }
 
         this.setState({
-          is_pay: is_pay,
-          is_delivery: is_delivery,
-          delivery: delivery,
-          product_list: product_list,
+          is_pay,
+          is_delivery,
+          delivery,
+          product_list,
           freight: new Number(freight).toFixed(2),
-          total: total.toFixed(2)
+          total: total.toFixed(2),
         });
       }.bind(this),
-      complete: function () {
+      complete() {
 
-      }.bind(this)
+      },
     }).post();
   }
 
@@ -113,33 +112,33 @@ class OrderCheck extends Component {
   }
 
   handleReset() {
-    let productTotal = 0;
-    for (let i = 0; i < this.state.product_list.length; i++) {
+    var productTotal = 0;
+    for (var i = 0; i < this.state.product_list.length; i++) {
       productTotal += this.state.product_list[i].product_price[0].product_price * this.state.product_list[i].product_quantity;
     }
 
     this.setState({
       delivery: database.getDelivery(),
-      productTotal: productTotal,
-      total: productTotal + this.state.freight
+      productTotal,
+      total: productTotal + this.state.freight,
     });
   }
 
   handleBack() {
     if (this.props.params.type.indexOf('product_') > -1) {
-      let url = this.props.params.type.replace('product_detail_', 'product/detail/');
-      let index = url.lastIndexOf('_');
+      const url = this.props.params.type.replace('product_detail_', 'product/detail/');
+      const index = url.lastIndexOf('_');
 
       this.props.dispatch(routerRedux.push({
-        pathname: '/' + url.substring(0, index) + '/' + url.substring(index + 1, url.length),
-        query: {}
+        pathname: `/${url.substring(0, index)}/${url.substring(index + 1, url.length)}`,
+        query: {},
       }));
     }
 
     if (this.props.params.type.indexOf('cart') > -1) {
       this.props.dispatch(routerRedux.push({
         pathname: '/cart',
-        query: {}
+        query: {},
       }));
     }
   }
@@ -150,14 +149,14 @@ class OrderCheck extends Component {
 
   handleDelivery() {
     if (database.getToken() == '') {
-      Popup.show(<Login type='PRODUCT' data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
+      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)} />, {
         animationType: 'slide-up',
-        maskClosable: false
+        maskClosable: false,
       });
     } else {
       this.props.dispatch(routerRedux.push({
-        pathname: '/delivery/index/order_check_' + this.props.params.type,
-        query: {}
+        pathname: `/delivery/index/order_check_${this.props.params.type}`,
+        query: {},
       }));
     }
   }
@@ -169,26 +168,26 @@ class OrderCheck extends Component {
 
 
     if (database.getToken() == '') {
-      Popup.show(<Login type='PRODUCT' data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
+      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)} />, {
         animationType: 'slide-up',
-        maskClosable: false
+        maskClosable: false,
       });
 
       return;
     }
 
-    if (typeof (this.state.delivery.delivery_name) == 'undefined') {
+    if (typeof (this.state.delivery.delivery_name) === 'undefined') {
       Toast.fail('请选择收货地址', constant.duration);
 
       return;
     }
 
-    let product_list = [];
+    const product_list = [];
 
-    for (let i = 0; i < this.state.product_list.length; i++) {
+    for (var i = 0; i < this.state.product_list.length; i++) {
       product_list.push({
         sku_id: this.state.product_list[i].sku_id,
-        product_quantity: this.state.product_list[i].product_quantity
+        product_quantity: this.state.product_list[i].product_quantity,
       });
     }
 
@@ -204,12 +203,12 @@ class OrderCheck extends Component {
         order_delivery_address: this.state.delivery.delivery_address,
         order_message: this.props.form.getFieldValue('order_message'),
         order_pay_type: 'WECHAT_PAY',
-        product_list: product_list,
+        product_list,
         open_id: database.getWeChatOpenId(),
-        pay_type: 'H5'
+        pay_type: 'H5',
       },
       success: function (data) {
-        if (typeof WeixinJSBridge == "undefined") {
+        if (typeof WeixinJSBridge === 'undefined') {
           if (document.addEventListener) {
             document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false);
           } else if (document.attachEvent) {
@@ -220,54 +219,56 @@ class OrderCheck extends Component {
           this.onBridgeReady(data);
         }
       }.bind(this),
-      complete: function () {
+      complete() {
 
-      }.bind(this)
+      },
     }).post();
   }
 
   onBridgeReady(data) {
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', {
-        "appId": data.appId,
-        "timeStamp": data.timeStamp,
-        "nonceStr": data.nonceStr,
-        "package": data.package,
-        "signType": data.signType,
-        "paySign": data.paySign
+        appId: data.appId,
+        timeStamp: data.timeStamp,
+        nonceStr: data.nonceStr,
+        package: data.package,
+        signType: data.signType,
+        paySign: data.paySign,
       },
-      function (res) {
+      (res) => {
         database.setProduct([]);
 
-        if (res.err_msg == "get_brand_wcpay_request:ok") {
+        if (res.err_msg == 'get_brand_wcpay_request:ok') {
           this.props.dispatch(routerRedux.push({
-            pathname: '/order/result/check/' + data.orderId,
-            query: {}
+            pathname: `/order/result/check/${data.orderId}`,
+            query: {},
           }));
         } else {
           this.props.dispatch(routerRedux.push({
-            pathname: '/order/detail/ALL/' + data.orderId,
-            query: {}
+            pathname: `/order/detail/ALL/${data.orderId}`,
+            query: {},
           }));
         }
-      }.bind(this)
+      },
     );
   }
 
   render() {
     const Item = List.Item;
-    const {getFieldProps} = this.props.form;
+    const { getFieldProps } = this.props.form;
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" leftContent="返回"
-                onLeftClick={this.handleBack.bind(this)}>填写订单</NavBar>
+        <NavBar
+          className={style.header} mode="light" leftContent="返回"
+          onLeftClick={this.handleBack.bind(this)}
+        >填写订单</NavBar>
         <div className={style.page}>
-          <WhiteSpace size="lg"/>
+          <WhiteSpace size="lg" />
           <List>
             <Item arrow="horizontal" wrap onClick={this.handleDelivery.bind(this)}>
               {
-                typeof (this.state.delivery.delivery_name) == 'undefined' ?
+                typeof (this.state.delivery.delivery_name) === 'undefined' ?
                   '收货地址'
                   :
                   <div>
@@ -277,35 +278,39 @@ class OrderCheck extends Component {
               }
             </Item>
           </List>
-          <WhiteSpace size="lg"/>
+          <WhiteSpace size="lg" />
           <List>
             {
-              this.state.product_list.map(function (item) {
+              this.state.product_list.map((item) => {
                 return (
-                  <Item key={item.product_id}
-                        extra={'￥' + (item.product_quantity * item.product_price[0].product_price).toFixed(2)}>
-                    <img className={style.productListImage}
-                         src={constant.host + item.product_image_file}/>
+                  <Item
+                    key={item.product_id}
+                    extra={`￥${(item.product_quantity * item.product_price[0].product_price).toFixed(2)}`}
+                  >
+                    <img
+                      className={style.productListImage}
+                      src={constant.host + item.product_image_file}
+                    />
                     <div className={style.productListText}>
                       {item.product_name}
                       <div>× {item.product_quantity}</div>
                     </div>
                   </Item>
-                )
-              }.bind(this))
+                );
+              })
             }
           </List>
-          <WhiteSpace size="lg"/>
+          <WhiteSpace size="lg" />
           <List>
-            <Item extra={'￥' + this.state.productTotal.toFixed(2)}>
+            <Item extra={`￥${this.state.productTotal.toFixed(2)}`}>
               商品金额
             </Item>
-            <Item extra={'￥' + this.state.freight}>
+            <Item extra={`￥${this.state.freight}`}>
               运费
             </Item>
           </List>
 
-          <WhiteSpace size="lg"/>
+          <WhiteSpace size="lg" />
           <List>
             <TextareaItem
               {...getFieldProps('order_message', {
@@ -321,8 +326,10 @@ class OrderCheck extends Component {
           <div className={style.checkTotal}>
             <span className={style.checkTotalText}>实付总金额: ￥{this.state.total}</span>
           </div>
-          <div className={style.checkSubmit} style={{backgroundColor: this.state.is_pay ? '#1AAD19' : '#dddddd'}}
-               onClick={this.handlePay.bind(this)}>立刻支付
+          <div
+            className={style.checkSubmit} style={{ backgroundColor: this.state.is_pay ? '#1AAD19' : '#dddddd' }}
+            onClick={this.handlePay.bind(this)}
+          >立刻支付
           </div>
         </div>
       </div>

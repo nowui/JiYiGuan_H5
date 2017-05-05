@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
-import {NavBar, Carousel, List, Toast, Badge, WhiteSpace, Stepper} from 'antd-mobile';
+import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import { NavBar, Carousel, List, Toast, Badge, WhiteSpace, Stepper } from 'antd-mobile';
 
 import constant from '../util/constant';
 import database from '../util/database';
@@ -22,9 +22,9 @@ class ProductDetail extends Component {
         product_image_file_list: [],
         product_price: [],
         product_stock: 0,
-        sku_id: ''
-      }
-    }
+        sku_id: '',
+      },
+    };
   }
 
   componentDidMount() {
@@ -39,7 +39,7 @@ class ProductDetail extends Component {
     http({
       url: '/product/find',
       data: {
-        product_id: this.props.params.product_id
+        product_id: this.props.params.product_id,
       },
       success: function (data) {
         this.setState({
@@ -52,13 +52,13 @@ class ProductDetail extends Component {
             product_quantity: data.product_quantity,
             product_stock: data.sku_list[0].product_stock,
             sku_id: data.sku_list[0].sku_id,
-            product_content: data.product_content
-          }
+            product_content: data.product_content,
+          },
         });
       }.bind(this),
-      complete: function () {
+      complete() {
 
-      }.bind(this)
+      },
     }).post();
   }
 
@@ -66,14 +66,14 @@ class ProductDetail extends Component {
     if (this.props.params.type == 'home') {
       this.props.dispatch(routerRedux.push({
         pathname: '/home',
-        query: {}
+        query: {},
       }));
     }
 
     if (this.props.params.type.indexOf('category_') > -1) {
       this.props.dispatch(routerRedux.push({
         pathname: this.props.params.type.replace('_', '/'),
-        query: {}
+        query: {},
       }));
     }
   }
@@ -87,11 +87,11 @@ class ProductDetail extends Component {
         product_price: this.state.product.product_price,
         product_quantity: this.state.product_quantity,
         product_stock: this.state.product.product_stock,
-        sku_id: this.state.product.sku_id
+        sku_id: this.state.product.sku_id,
       });
 
       this.setState({
-        cart_count: database.getCartList().length
+        cart_count: database.getCartList().length,
       });
     } else {
       database.setProduct([{
@@ -100,22 +100,22 @@ class ProductDetail extends Component {
         product_image_file: this.state.product.product_image_file,
         product_price: this.state.product.product_price,
         product_quantity: this.state.product_quantity,
-        sku_id: this.state.product.sku_id
+        sku_id: this.state.product.sku_id,
       }]);
 
-      setTimeout(function () {
+      setTimeout(() => {
         this.props.dispatch(routerRedux.push({
-          pathname: '/order/check/product_' + this.props.params.product_id,
-          query: {}
+          pathname: `/order/check/product_${this.props.params.product_id}`,
+          query: {},
         }));
-      }.bind(this), 500);
+      }, 500);
     }
   }
 
   handleGo() {
     this.props.dispatch(routerRedux.push({
       pathname: '/cart',
-      query: {}
+      query: {},
     }));
   }
 
@@ -127,11 +127,11 @@ class ProductDetail extends Component {
       product_price: this.state.product.product_price,
       product_quantity: this.state.product_quantity,
       product_stock: this.state.product.product_stock,
-      sku_id: this.state.product.sku_id
+      sku_id: this.state.product.sku_id,
     });
 
     this.setState({
-      cart_count: database.getCartList().length
+      cart_count: database.getCartList().length,
     });
 
     Toast.success('加入成功', constant.duration);
@@ -140,7 +140,7 @@ class ProductDetail extends Component {
   handleHome() {
     this.props.dispatch(routerRedux.push({
       pathname: '/home',
-      query: {}
+      query: {},
     }));
   }
 
@@ -155,18 +155,18 @@ class ProductDetail extends Component {
       product_image_file: this.state.product.product_image_file,
       product_price: this.state.product.product_price,
       product_quantity: this.state.product_quantity,
-      sku_id: this.state.product.sku_id
+      sku_id: this.state.product.sku_id,
     }]);
 
     this.props.dispatch(routerRedux.push({
-      pathname: '/order/check/product_detail_' + this.props.params.type + '_' + this.props.params.product_id,
-      query: {}
+      pathname: `/order/check/product_detail_${this.props.params.type}_${this.props.params.product_id}`,
+      query: {},
     }));
   }
 
   handleQuantity(product_quantity) {
     this.setState({
-      product_quantity: product_quantity
+      product_quantity,
     });
   }
 
@@ -175,49 +175,52 @@ class ProductDetail extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" leftContent="返回"
-                onLeftClick={this.handleBack.bind(this)}
-                rightContent={[<Badge key={1} text={this.state.cart_count} onClick={this.handleGo.bind(this)}><img
-                  className={style.cartIcon} src={require('../assets/svg/cart.svg')}
-                  onClick={this.handleGo.bind(this)}/></Badge>]}
+        <NavBar
+          className={style.header} mode="light" leftContent="返回"
+          onLeftClick={this.handleBack.bind(this)}
+          rightContent={[<Badge key={1} text={this.state.cart_count} onClick={this.handleGo.bind(this)}><img
+            className={style.cartIcon} src={require('../assets/svg/cart.svg')}
+            onClick={this.handleGo.bind(this)}
+          /></Badge>]}
         >商品详情</NavBar>
         <div className={style.page}>
           {
             this.state.product.product_image_file_list.length == 0 ?
               ''
               :
-              <Carousel autoplay={this.state.product.product_image_file_list.length > 1} infinite={this.state.product.product_image_file_list.length > 1} style={{height: document.documentElement.clientWidth + 'px'}}>
+              <Carousel autoplay={this.state.product.product_image_file_list.length > 1} infinite={this.state.product.product_image_file_list.length > 1} style={{ height: `${document.documentElement.clientWidth}px` }}>
                 {
-                  this.state.product.product_image_file_list.map(function (item, index) {
+                  this.state.product.product_image_file_list.map((item, index) => {
                     return (
-                      <img key={index} style={{width: document.documentElement.clientWidth + 'px', height: document.documentElement.clientWidth + 'px'}} src={constant.host + item}/>
-                    )
-                  }.bind(this))
+                      <img key={index} style={{ width: `${document.documentElement.clientWidth}px`, height: `${document.documentElement.clientWidth}px` }} src={constant.host + item} />
+                    );
+                  })
                 }
               </Carousel>
           }
           <List>
             <Item>
               {this.state.product.product_name}
-              <br/>
+              <br />
               {
                 this.state.product.product_price.length > 0 ?
                   <span
-                    className={style.productPopupRedText}>￥{this.state.product.product_price[0].product_price.toFixed(2)}</span>
+                    className={style.productPopupRedText}
+                  >￥{this.state.product.product_price[0].product_price.toFixed(2)}</span>
                   :
                   ''
               }
             </Item>
           </List>
-          <WhiteSpace size="lg"/>
+          <WhiteSpace size="lg" />
           <List>
             <Item>
               已选：{this.state.product_quantity} 个
             </Item>
             <Item>
               <Stepper
-                style={{width: '200px', minWidth: '2rem'}}
-                showNumber={true}
+                style={{ width: '200px', minWidth: '2rem' }}
+                showNumber
                 max={99999}
                 min={1}
                 defaultValue={this.state.product_quantity}
@@ -226,17 +229,19 @@ class ProductDetail extends Component {
               />
             </Item>
           </List>
-          <WhiteSpace size="lg"/>
-          <div className={style.productContent}
-               dangerouslySetInnerHTML={{__html: this.state.product.product_content}}></div>
+          <WhiteSpace size="lg" />
+          <div
+            className={style.productContent}
+            dangerouslySetInnerHTML={{ __html: this.state.product.product_content }}
+          />
         </div>
         <div className={style.footer}>
           <div className={style.productHome} onClick={this.handleHome.bind(this)}>
-            <img className={style.productIcon} src={require('../assets/svg/home.svg')}/>
+            <img className={style.productIcon} src={require('../assets/svg/home.svg')} />
             <div className={style.productFont}>首页</div>
           </div>
           <div className={style.productFavor} onClick={this.handleFavor.bind(this)}>
-            <img className={style.productIcon} src={require('../assets/svg/favor.svg')}/>
+            <img className={style.productIcon} src={require('../assets/svg/favor.svg')} />
             <div className={style.productFont}>收藏</div>
           </div>
           <div className={style.productAddCart} onClick={this.handleCart.bind(this)}>加入购物车</div>

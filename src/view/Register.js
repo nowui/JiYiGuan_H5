@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
-import {createForm} from 'rc-form';
-import {Toast, NavBar, List, InputItem, Button} from 'antd-mobile';
+import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import { createForm } from 'rc-form';
+import { Toast, NavBar, List, InputItem, Button } from 'antd-mobile';
 
 import constant from '../util/constant';
 import database from '../util/database';
@@ -13,7 +13,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
   componentDidMount() {
@@ -37,16 +37,16 @@ class Register extends Component {
             database.setName(data.student_name);
             database.setClazz(data.clazz_name);
 
-            setTimeout(function () {
+            setTimeout(() => {
               this.props.dispatch(routerRedux.push({
                 pathname: '/home',
-                query: {}
+                query: {},
               }));
-            }.bind(this), constant.timeout * 300);
+            }, constant.timeout * 300);
           }.bind(this),
-          complete: function () {
+          complete() {
 
-          }.bind(this)
+          },
         }).post();
       }
     });
@@ -57,22 +57,24 @@ class Register extends Component {
   }
 
   render() {
-    const {getFieldProps, getFieldError} = this.props.form;
+    const { getFieldProps, getFieldError } = this.props.form;
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" leftContent="返回"
-                onLeftClick={this.handleBack.bind(this)}>用户注册</NavBar>
+        <NavBar
+          className={style.header} mode="light" leftContent="返回"
+          onLeftClick={this.handleBack.bind(this)}
+        >用户注册</NavBar>
         <div className={style.page}>
-          <form style={{margin: '50px 10px 0px 10px'}}>
+          <form style={{ margin: '50px 10px 0px 10px' }}>
             <List>
               <InputItem
                 {...getFieldProps('user_account', {
                   rules: [{
                     required: true,
-                    message: '请输入帐号'
+                    message: '请输入帐号',
                   }],
-                  initialValue: ''
+                  initialValue: '',
                 })}
                 error={!!getFieldError('user_account')}
                 clear
@@ -82,9 +84,9 @@ class Register extends Component {
                 {...getFieldProps('user_password', {
                   rules: [{
                     required: true,
-                    message: '请输入密码'
+                    message: '请输入密码',
                   }],
-                  initialValue: ''
+                  initialValue: '',
                 })}
                 error={!!getFieldError('user_password')}
                 clear
@@ -95,9 +97,9 @@ class Register extends Component {
                 {...getFieldProps('user_password_2', {
                   rules: [{
                     required: true,
-                    message: '请输入确认密码'
+                    message: '请输入确认密码',
                   }],
-                  initialValue: ''
+                  initialValue: '',
                 })}
                 error={!!getFieldError('user_password_2')}
                 clear
@@ -106,7 +108,7 @@ class Register extends Component {
               >确认密码</InputItem>
             </List>
           </form>
-          <div style={{margin: '50px 10px 0px 10px'}}>
+          <div style={{ margin: '50px 10px 0px 10px' }}>
             <Button type="primary" onClick={this.handleSubmit.bind(this)}>确定</Button>
           </div>
         </div>

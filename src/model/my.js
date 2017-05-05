@@ -1,11 +1,12 @@
-import constant from '../util/constant';
-
 export default {
 
-  namespace: 'category',
+  namespace: 'my',
 
   state: {
-    product_list: [],
+    member_total_amount: 0,
+    WAIT_PAY: 0,
+    WAIT_SEND: 0,
+    WAIT_RECEIVE: 0
   },
 
   reducers: {

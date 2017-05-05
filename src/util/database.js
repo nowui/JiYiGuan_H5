@@ -1,14 +1,14 @@
 import constant from '../util/constant';
 
-const wechat_open_id_key = 'wechat_open_id_' + constant.version;
-const user_name_key = 'user_name_key_' + constant.version;
-const user_avatar_key = 'user_avatar_' + constant.version;
-const token_key = 'token_' + constant.version;
-const delivery_key = 'delivery_' + constant.version;
-const product_key = 'product_' + constant.version;
-const cart_key = 'cart_' + constant.version;
-const member_level_key = 'member_level_' + constant.version;
-const scene_qrcode_key = 'scene_qrcode_' + constant.version;
+const wechat_open_id_key = `wechat_open_id_${constant.version}`;
+const user_name_key = `user_name_key_${constant.version}`;
+const user_avatar_key = `user_avatar_${constant.version}`;
+const token_key = `token_${constant.version}`;
+const delivery_key = `delivery_${constant.version}`;
+const product_key = `product_${constant.version}`;
+const cart_key = `cart_${constant.version}`;
+const member_level_key = `member_level_${constant.version}`;
+const scene_qrcode_key = `scene_qrcode_${constant.version}`;
 
 const database = {
   getWeChatOpenId() {
@@ -77,7 +77,7 @@ const database = {
     localStorage.removeItem(token_key);
   },
   getDelivery() {
-    let delivery = localStorage.getItem(delivery_key);
+    const delivery = localStorage.getItem(delivery_key);
 
     if (delivery == null) {
       return {};
@@ -94,7 +94,7 @@ const database = {
     localStorage.removeItem(delivery_key);
   },
   getProduct() {
-    let product = localStorage.getItem(product_key);
+    const product = localStorage.getItem(product_key);
 
     if (product == null) {
       return [];
@@ -111,7 +111,7 @@ const database = {
     localStorage.removeItem(product_key);
   },
   getCartList() {
-    let cart = localStorage.getItem(cart_key);
+    const cart = localStorage.getItem(cart_key);
 
     if (cart == null) {
       return [];
@@ -125,11 +125,11 @@ const database = {
     localStorage.setItem(cart_key, JSON.stringify(cartList));
   },
   addCart(cart) {
-    let cartList = this.getCartList();
+    const cartList = this.getCartList();
     let isNotExit = true;
 
     for (let i = 0; i < cartList.length; i++) {
-      let c = cartList[i];
+      const c = cartList[i];
 
       if (cart.product_id == c.product_id) {
         isNotExit = false;
@@ -154,13 +154,13 @@ const database = {
     localStorage.removeItem(cart_key);
   },
   getMemberLevel() {
-    let member_level = localStorage.getItem(member_level_key);
+    const member_level = localStorage.getItem(member_level_key);
 
     if (member_level == null) {
       return {
         member_level_id: '',
         member_level_name: '',
-        member_level_value: -1
+        member_level_value: -1,
       };
     }
 
@@ -178,7 +178,7 @@ const database = {
     let scene_qrcode = localStorage.getItem(scene_qrcode_key);
 
     if (scene_qrcode == null) {
-      scene_qrcode = ''
+      scene_qrcode = '';
     }
 
     return scene_qrcode;
@@ -193,7 +193,7 @@ const database = {
   },
   removeAll() {
     localStorage.clear();
-  }
+  },
 };
 
 export default database;

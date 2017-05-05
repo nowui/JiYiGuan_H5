@@ -1,26 +1,25 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class Auth extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {}
-    }
+    this.state = {};
+  }
 
-    componentDidMount() {
+  componentDidMount() {
 
-    }
+  }
 
-    componentWillUnmount() {
+  componentWillUnmount() {
 
-    }
+  }
 
-    render() {
-        return (
-            <div>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div />
+    );
+  }
 }
 
 Auth.propTypes = {};

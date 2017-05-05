@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
+import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Stepper, Checkbox, Result} from 'antd-mobile';
+import { NavBar, WhiteSpace, List, Stepper, Checkbox, Result } from 'antd-mobile';
 
 import constant from '../util/constant';
 import database from '../util/database';
@@ -17,8 +17,8 @@ class Cart extends Component {
       is_select: false,
       is_edit: false,
       cart_total: 0,
-      cart_list: database.getCartList()
-    }
+      cart_list: database.getCartList(),
+    };
   }
 
   componentDidMount() {
@@ -31,17 +31,17 @@ class Cart extends Component {
 
   handleRight() {
     this.setState({
-      is_edit: !this.state.is_edit
+      is_edit: !this.state.is_edit,
     });
   }
 
   handleChangeItem(product) {
-    let isAll = true;
-    let isSelect = false;
-    let cartTotal = 0;
-    let cartList = this.state.cart_list;
+    var isAll = true;
+    var isSelect = false;
+    var cartTotal = 0;
+    var cartList = this.state.cart_list;
 
-    for (let i = 0; i < cartList.length; i++) {
+    for (var i = 0; i < cartList.length; i++) {
       if (cartList[i].product_id == product.product_id) {
         cartList[i].is_check = !cartList[i].is_check;
       }
@@ -49,7 +49,7 @@ class Cart extends Component {
       if (cartList[i].is_check) {
         isSelect = true;
 
-        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price
+        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price;
       } else {
         isAll = false;
       }
@@ -59,23 +59,23 @@ class Cart extends Component {
       is_all: isAll,
       is_select: isSelect,
       cart_total: cartTotal,
-      cart_list: cartList
+      cart_list: cartList,
     });
   }
 
   handleChangeAll() {
-    let isAll = !this.state.is_all;
-    let isSelect = false;
-    let cartTotal = 0;
-    let cartList = this.state.cart_list;
+    var isAll = !this.state.is_all;
+    var isSelect = false;
+    var cartTotal = 0;
+    var cartList = this.state.cart_list;
 
-    for (let i = 0; i < cartList.length; i++) {
+    for (var i = 0; i < cartList.length; i++) {
       cartList[i].is_check = isAll;
 
       if (isAll) {
         isSelect = true;
 
-        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price
+        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price;
       }
     }
 
@@ -83,22 +83,21 @@ class Cart extends Component {
       is_all: isAll,
       is_select: isSelect,
       cart_total: cartTotal,
-      cart_list: cartList
+      cart_list: cartList,
     });
   }
 
   handleChangeStepper(product_id, product_quantity) {
-    let cartTotal = 0;
-    let cartList = this.state.cart_list;
+    var cartTotal = 0;
+    var cartList = this.state.cart_list;
 
-    for (let i = 0; i < cartList.length; i++) {
+    for (var i = 0; i < cartList.length; i++) {
       if (cartList[i].product_id == product_id) {
-
         cartList[i].product_quantity = product_quantity;
       }
 
       if (cartList[i].is_check) {
-        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price
+        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price;
       }
     }
 
@@ -106,23 +105,23 @@ class Cart extends Component {
 
     this.setState({
       cart_total: cartTotal,
-      cart_list: cartList
+      cart_list: cartList,
     });
   }
 
   handleDelete(index) {
-    let isAll = true;
-    let isSelect = false;
-    let cartTotal = 0;
-    let cartList = this.state.cart_list;
+    var isAll = true;
+    var isSelect = false;
+    var cartTotal = 0;
+    var cartList = this.state.cart_list;
 
     cartList.splice(index, 1);
 
-    for (let i = 0; i < cartList.length; i++) {
+    for (var i = 0; i < cartList.length; i++) {
       if (cartList[i].is_check) {
         isSelect = true;
 
-        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price
+        cartTotal += cartList[i].product_quantity * cartList[i].product_price[0].product_price;
       } else {
         isAll = false;
       }
@@ -136,16 +135,16 @@ class Cart extends Component {
       is_all: isAll,
       is_select: isSelect,
       cart_total: cartTotal,
-      cart_list: cartList
+      cart_list: cartList,
     });
   }
 
   handleSubmit() {
-    let cartList = this.state.cart_list;
-    let unCheckCartList = [];
-    let productList = [];
+    var cartList = this.state.cart_list;
+    var unCheckCartList = [];
+    var productList = [];
 
-    for (let i = 0; i < cartList.length; i++) {
+    for (var i = 0; i < cartList.length; i++) {
       if (cartList[i].is_check) {
         productList.push(cartList[i]);
       } else {
@@ -158,7 +157,7 @@ class Cart extends Component {
 
     this.props.dispatch(routerRedux.push({
       pathname: '/order/check/cart',
-      query: {}
+      query: {},
     }));
   }
 
@@ -168,30 +167,39 @@ class Cart extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}
-                rightContent={this.state.cart_list.length == 0 ? [] : [<div onClick={this.handleRight.bind(this)}
-                                                                            key='0'>{this.state.is_edit ? '完成' : '编辑'}</div>]}>购物车</NavBar>
+        <NavBar
+          className={style.header} mode="light" iconName={false}
+          rightContent={this.state.cart_list.length == 0 ? [] : [<div
+            onClick={this.handleRight.bind(this)}
+            key="0"
+          >{this.state.is_edit ? '完成' : '编辑'}</div>]}
+        >购物车</NavBar>
         <div className={style.page}>
-          <WhiteSpace size="lg"/>
+          <WhiteSpace size="lg" />
           <List>
             {
-              this.state.cart_list.map(function (item, index) {
+              this.state.cart_list.map((item, index) => {
                 return (
-                  <Item key={item.product_id}
-                        className={style.cartItem}>
-                    <CheckboxItem checked={item.is_check} className={style.cartProductListCheckbox} activeStyle={{
-                      backgroundColor: '#ffffff'
-                    }} onChange={this.handleChangeItem.bind(this, item)}>
-                    </CheckboxItem>
-                    <img className={style.cartProductListImage}
-                         src={constant.host + item.product_image_file}/>
+                  <Item
+                    key={item.product_id}
+                    className={style.cartItem}
+                  >
+                    <CheckboxItem
+                      checked={item.is_check} className={style.cartProductListCheckbox} activeStyle={{
+                        backgroundColor: '#ffffff',
+                      }} onChange={this.handleChangeItem.bind(this, item)}
+                    />
+                    <img
+                      className={style.cartProductListImage}
+                      src={constant.host + item.product_image_file}
+                    />
                     <div className={style.cartProductListText}>
                       {item.product_name}
                       {
                         this.state.is_edit ?
                           <div>
                             <Stepper
-                              style={{width: '220px'}}
+                              style={{ width: '220px' }}
                               showNumber={false}
                               max={item.product_stock}
                               min={1}
@@ -213,16 +221,17 @@ class Cart extends Component {
                           删除</div>
                         :
                         <div
-                          className={style.cartProductListPrice}>{'￥' + (item.product_quantity * item.product_price[0].product_price).toFixed(2)}</div>
+                          className={style.cartProductListPrice}
+                        >{`￥${(item.product_quantity * item.product_price[0].product_price).toFixed(2)}`}</div>
                     }
                   </Item>
-                )
-              }.bind(this))
+                );
+              })
             }
             {
               this.state.cart_list.length == 0 ?
                 <Result
-                  img={<img src={require('../assets/svg/empty.svg')} style={{width: '1.2rem', height: '1.2rem'}}/>}
+                  img={<img src={require('../assets/svg/empty.svg')} style={{ width: '1.2rem', height: '1.2rem' }} />}
                   message={constant.empty}
                 />
                 :
@@ -236,14 +245,16 @@ class Cart extends Component {
             :
             <div className={style.footer2}>
               <div className={style.checkTotal}>
-                <CheckboxItem checked={this.state.is_all} activeStyle={{
-                  backgroundColor: '#ffffff'
-                }} className={style.CheckboxItem} onChange={this.handleChangeAll.bind(this)}>
+                <CheckboxItem
+                  checked={this.state.is_all} activeStyle={{
+                    backgroundColor: '#ffffff',
+                  }} className={style.CheckboxItem} onChange={this.handleChangeAll.bind(this)}
+                >
                   全选
                 </CheckboxItem>
                 <div className={style.checkTotalCartText}>￥{this.state.cart_total.toFixed(2)}</div>
               </div>
-              <div className={style.productBuy} style={{backgroundColor: this.state.is_select ? '#f23030' : '#dddddd'}} onClick={this.handleSubmit.bind(this)}>
+              <div className={style.productBuy} style={{ backgroundColor: this.state.is_select ? '#f23030' : '#dddddd' }} onClick={this.handleSubmit.bind(this)}>
                 立即购买
               </div>
             </div>
