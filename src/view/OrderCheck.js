@@ -60,7 +60,7 @@ class OrderCheck extends Component {
               text: '确定',
               onPress: function () {
                 this.props.dispatch(routerRedux.push({
-                  pathname: `/delivery/index/order_check_${this.props.params.type}`,
+                  pathname: '/delivery/index/order_check_' + this.props.params.type,
                   query: {},
                 }));
               }.bind(this),
@@ -116,7 +116,7 @@ class OrderCheck extends Component {
       const index = url.lastIndexOf('_');
 
       this.props.dispatch(routerRedux.push({
-        pathname: `/${url.substring(0, index)}/${url.substring(index + 1, url.length)}`,
+        pathname: '/' + url.substring(0, index) + '/' + url.substring(index + 1, url.length),
         query: {},
       }));
     }
@@ -131,7 +131,7 @@ class OrderCheck extends Component {
 
   handleDelivery() {
     this.props.dispatch(routerRedux.push({
-      pathname: `/delivery/index/order_check_${this.props.params.type}`,
+      pathname: '/delivery/index/order_check_' + this.props.params.type,
       query: {},
     }));
   }
@@ -205,12 +205,12 @@ class OrderCheck extends Component {
 
         if (res.err_msg == 'get_brand_wcpay_request:ok') {
           this.props.dispatch(routerRedux.push({
-            pathname: `/order/result/check/${data.orderId}`,
+            pathname: '/order/result/check/' + data.orderId,
             query: {},
           }));
         } else {
           this.props.dispatch(routerRedux.push({
-            pathname: `/order/detail/ALL/${data.orderId}`,
+            pathname: '/order/detail/ALL/' + data.orderId,
             query: {},
           }));
         }
@@ -250,7 +250,7 @@ class OrderCheck extends Component {
                 return (
                   <Item
                     key={item.product_id}
-                    extra={`￥${(item.product_quantity * item.product_price[0].product_price).toFixed(2)}`}
+                    extra={'￥' + (item.product_quantity * item.product_price[0].product_price).toFixed(2)}
                   >
                     <img
                       className={style.productListImage}
@@ -267,10 +267,10 @@ class OrderCheck extends Component {
           </List>
           <WhiteSpace size="lg" />
           <List>
-            <Item extra={`￥${this.state.product_total.toFixed(2)}`}>
+            <Item extra={'￥' + this.state.product_total.toFixed(2)}>
               商品金额
             </Item>
-            <Item extra={`￥${this.state.freight}`}>
+            <Item extra={'￥' + this.state.freight}>
               运费
             </Item>
           </List>

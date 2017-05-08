@@ -57,7 +57,7 @@ class My extends Component {
 
   handleOrder(order_status) {
     this.props.dispatch(routerRedux.push({
-      pathname: `/order/index/${order_status}`,
+      pathname: '/order/index/' + order_status,
       query: {},
     }));
   }
@@ -96,7 +96,7 @@ class My extends Component {
     return (
       <div>
         <NavBar className={style.header} mode="light" iconName={false}>个人中心</NavBar>
-        <div className={style.page}>
+        <div className={style.page2}>
           <WhiteSpace size="lg"/>
           <List>
             <Item

@@ -69,7 +69,7 @@ class OrderResult extends Component {
 
   handleOrder() {
     this.props.dispatch(routerRedux.push({
-      pathname: `/order/detail/ALL/${this.props.params.order_id}`,
+      pathname: '/order/detail/ALL/' + this.props.params.order_id,
       query: {},
     }));
   }

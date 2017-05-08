@@ -107,7 +107,7 @@ class Category extends Component {
 
   handleProduct(product_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: '/product/detail/category_${this.state.category_id}/' + product_id,
+      pathname: '/product/detail/category_' + this.state.category_id + '/' + product_id,
       query: {},
     }));
   }

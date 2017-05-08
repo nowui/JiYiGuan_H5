@@ -9,6 +9,7 @@ export default {
   empty: '当前没有数据',
   platform: 'H5',
   version: '1.0.1',
+  is_developer: true,
   // host: 'http://localhost:8080',
   host: 'http://api.jiyiguan.nowui.com',
   category_list: [{

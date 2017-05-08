@@ -20,7 +20,11 @@ function getToken() {
   var token = localStorage.getItem(token_key);
 
   if (token == null) {
-    return '';
+    if (constant.is_developer) {
+      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTQyNTc2ODQsImV4cCI6MTUyNTc5MzY4NCwiYXV0aG9yaXphdGlvbl9pZCI6IjA0NTI4MTAyZDMwODQwZGFhNWUyYWMzZTg4ODM2N2U5IiwidXNlcl9pZCI6Ijk4Yjc3OGIxMTc1MDRjOTg4MWIzOGQ5OTE0ZDdmOTZkIn0.hSlb0WMcz3wWSBMOOUm8krupBSZ6VEYNiGAFZP04vUuEuCqNEoEJNsNJn7FprODyoqFl8Skv-315_3EFEbu1iA';
+    } else {
+      return '';
+    }
   }
 
   return token;
@@ -112,12 +116,21 @@ function getMember() {
   var member = localStorage.getItem(member_key);
 
   if (member == null) {
-    return {
-      user_name: '',
-      user_avatar: '',
-      member_level_id: '',
-      member_level_value: 999
-    };
+    if (constant.is_developer) {
+      return {
+        "user_name": "Ronaldo",
+        "user_avatar": "http://wx.qlogo.cn/mmopen/9FxxcxLpKVsTsPshsySRq7W5TDVr6dticxqKribaEGFfUthzxoRrbknym1beVH9mlE5MQtK1KqlyznRxMRpder6w7aEUXI5pEW/0",
+        "member_level_id": "675437f6b82e437d9c577a30d42516e9",
+        "member_level_value": "1"
+      };
+    } else {
+      return {
+        user_name: '',
+        user_avatar: '',
+        member_level_id: '',
+        member_level_value: 999
+      };
+    }
   }
 
   return JSON.parse(member);

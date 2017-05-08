@@ -174,7 +174,7 @@ class Cart extends Component {
             key="0"
           >{this.state.is_edit ? '完成' : '编辑'}</div>]}
         >购物车</NavBar>
-        <div className={style.page}>
+        <div className={style.page2}>
           <WhiteSpace size="lg"/>
           {
             this.state.cart_list.length > 0 ?

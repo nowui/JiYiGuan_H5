@@ -67,14 +67,14 @@ class Index extends Component {
 
   handleCategory(category_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: '/category/${category_id}',
+      pathname: '/category/' + category_id,
       query: {},
     }));
   }
 
   handleProduct(product_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: '/product/detail/index/${product_id',
+      pathname: '/product/detail/index/' + product_id,
       query: {},
     }));
   }
@@ -83,7 +83,7 @@ class Index extends Component {
     return (
       <div>
         <NavBar className={style.header} mode="light" iconName={false}>商城首页</NavBar>
-        <div className={style.page}>
+        <div className={style.page2}>
           <Carousel autoplay infinite>
             <img
               src="http://api.jiyiguan.nowui.com/upload/6a4dbae2ac824d2fb170638d55139666/original/00b1216e83b84226978d63703e7d597b.jpg"

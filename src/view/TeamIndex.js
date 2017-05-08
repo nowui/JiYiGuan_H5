@@ -81,10 +81,17 @@ class TeamIndex extends Component {
                   this.props.team.list.map((item) => {
                     return (
                       <Item arrow="horizontal"
+                            extra={'￥' + item.member_total_amount.toFixed(2)}
                             wrap key={item.member_id}
                             onClick={this.handleClick.bind(this, item.member_id)}
                       >
-                        {item.member_name}
+                        <div className={style.teamAvatar}>
+                          <img src={item.user_avatar} style={{width: '100%', height: '100%'}}/>
+                        </div>
+                        <div className={style.teamName}>{item.member_name}</div>
+                        <div className={style.teamLevel}>
+                          {item.member_level_name}
+                        </div>
                       </Item>
                     );
                   })

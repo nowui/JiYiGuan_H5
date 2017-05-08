@@ -72,7 +72,7 @@ class OrderIndex extends Component {
 
   handleClick(order_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: `/order/detail/${this.state.order_flow}/${order_id}`,
+      pathname: '/order/detail/' + this.state.order_flow + '/' + order_id,
       query: {},
     }));
   }
@@ -121,7 +121,7 @@ class OrderIndex extends Component {
                   this.state.order_list.map((item) => {
                     return (
                       <Item
-                        wrap arrow="horizontal" key={item.order_id}
+                        wrap arrow="horizontal" multipleLine key={item.order_id}
                         onClick={this.handleClick.bind(this, item.order_id)}
                       >
                         <div>单号： {item.order_number}</div>

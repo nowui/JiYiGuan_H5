@@ -63,7 +63,7 @@ class ProductDetail extends Component {
   }
 
   handleBack() {
-    if (this.props.params.type == 'home') {
+    if (this.props.params.type == 'index') {
       this.props.dispatch(routerRedux.push({
         pathname: '/index',
         query: {},
@@ -105,7 +105,7 @@ class ProductDetail extends Component {
 
       setTimeout(() => {
         this.props.dispatch(routerRedux.push({
-          pathname: `/order/check/product_${this.props.params.product_id}`,
+          pathname: '/order/check/product_' + this.props.params.product_id,
           query: {},
         }));
       }, 500);
@@ -159,7 +159,7 @@ class ProductDetail extends Component {
     }]);
 
     this.props.dispatch(routerRedux.push({
-      pathname: `/order/check/product_detail_${this.props.params.type}_${this.props.params.product_id}`,
+      pathname: '/order/check/product_detail_' + this.props.params.type + '_' + this.props.params.product_id,
       query: {},
     }));
   }
