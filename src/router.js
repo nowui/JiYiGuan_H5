@@ -1,14 +1,12 @@
 import React from 'react';
 import { Router, Route, IndexRedirect } from 'dva/router';
 
-import Auth from './view/Auth';
 import Main from './view/Main';
 import Home from './view/Home';
+import Index from './view/Index';
 import Category from './view/Category';
 import Cart from './view/Cart';
 import My from './view/My';
-import Login from './view/Login';
-import Register from './view/Register';
 import ProductDetail from './view/ProductDetail';
 import OrderIndex from './view/OrderIndex';
 import OrderDetail from './view/OrderDetail';
@@ -22,8 +20,12 @@ import BillIndex from './view/BillIndex';
 import BillMemberIndex from './view/BillMemberIndex';
 import Qrcode from './view/Qrcode';
 
+import wechat from './util/wechat';
+
 export default function ({ history }) {
   const handleEnter = function (next, replace, callback) {
+    wechat.auth();
+
     callback();
   };
 
@@ -35,11 +37,9 @@ export default function ({ history }) {
     <Router history={history}>
       <Route path="/" onEnter={handleEnter} onChange={handleChange}>
         <IndexRedirect to="home" />
-        <Route path="auth/:wechat_open_id" component={Auth} />
-        <Route path="login" component={Login} />
-        <Route path="register" component={Register} />
+        <Route path="home" component={Home} />
         <Route component={Main}>
-          <Route path="home" component={Home} />
+          <Route path="index" component={Index} />
           <Route path="cart" component={Cart} />
           <Route path="my" component={My} />
         </Route>

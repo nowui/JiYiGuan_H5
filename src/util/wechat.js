@@ -1,56 +1,44 @@
-import http from './http';
-import database from './database';
+import storage from './storage';
 
-const wechat = {
-  auth() {
-    const wechat_open_id = this.getQueryString('wechat_open_id');
+function getQueryString(name) {
+  var url = document.location.href;
+  var reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`, 'i');
+  var r = url.substr(url.indexOf('?') + 1).match(reg);
+  if (r != null) {
+    return unescape(r[2]);
+  }
+  return '';
+}
 
-    // if (wechat_open_id == '') {
-    //     let ua = navigator.userAgent.toLowerCase();
-    //     if (ua.match(/MicroMessenger/i) == "micromessenger") {
-    //         if (database.getToken() == '') {
-    //             this.login();
-    //         }
-    //     }
-    // }
-
-
-    if (wechat_open_id != '') {
-      http({
-        url: '/member/wechat/login',
-        data: {
-          wechat_open_id,
-        },
-        success(data) {
-          database.setWeChatOpenId(wechat_open_id);
-          database.setToken(data.token);
-          database.setDelivery(data.delivery);
-          database.setUserName(data.user_name);
-          database.setUserAvatar(data.user_avatar);
-          database.setMemberLevel(data.member_level);
-          database.setSceneQrcode(data.scene_qrcode);
-        },
-        complete() {
-
-        },
-      }).post();
+function auth() {
+  var open_id = getQueryString('open_id');
+  if (open_id == '') {
+    var token = storage.getToken();
+    if (token == '') {
+      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx934f793803320ecd&redirect_uri=http%3A%2F%2Fapi.jiyiguan.nowui.com%2Fwechat%2Fapi%2Fauth%3Furl%3Dhome&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
     }
-  },
-  login() {
-    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx26c8db6f1987e4e0&redirect_uri=http://api.jiyiguan.nowui.com/wechat/api/auth?url=${document.URL.replace('http://h5.jiyiguan.nowui.com/#/', '')}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`;
-  },
-  getQueryString(name) {
-    const url = document.location.href;
-    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`, 'i');
-    const r = url.substr(url.indexOf('?') + 1).match(reg);
-    if (r != null) {
-      return unescape(r[2]);
-    }
-    return '';
-  },
-  pay() {
+  } else {
+    if (open_id != '') {
+      var token = getQueryString('token');
+      var user_name = getQueryString('user_name');
+      var user_avatar = getQueryString('user_avatar');
+      var member_level_id = getQueryString('member_level_id');
+      var member_level_value = getQueryString('member_level_value');
 
-  },
+      storage.setOpenId(open_id);
+      storage.setToken(token);
+      storage.setOpenId(open_id);
+      storage.setMember({
+        user_name: user_name,
+        user_avatar: user_avatar,
+        member_level_id: member_level_id,
+        member_level_value: member_level_value
+      });
+    }
+  }
+
+}
+
+export default {
+  auth: auth
 };
-
-export default wechat;

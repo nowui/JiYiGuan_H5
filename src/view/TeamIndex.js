@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 
-import { NavBar, WhiteSpace, List, Checkbox, Result } from 'antd-mobile';
+import {NavBar, WhiteSpace, List} from 'antd-mobile';
 
-import constant from '../util/constant';
-import database from '../util/database';
 import http from '../util/http';
 import style from './style.css';
 
@@ -75,30 +73,35 @@ class TeamIndex extends Component {
           onLeftClick={this.handleBack.bind(this)}
         >我的团队</NavBar>
         <div className={style.page}>
-          <WhiteSpace size="lg" />
-          <List>
-            {
-              this.props.team.list.map((item) => {
-                return (
-                  <Item  arrow="horizontal"
-                    wrap key={item.member_id}
-                    onClick={this.handleClick.bind(this, item.member_id)}
-                  >
-                    {item.member_name}
-                  </Item>
-                );
-              })
-            }
-            {
-              this.state.is_load && this.props.team.list.length == 0 ?
-                <Result
-                  img={<img src={require('../assets/svg/empty.svg')} style={{ width: '1.2rem', height: '1.2rem' }} />}
-                  message={constant.empty}
-                />
-                :
-                ''
-            }
-          </List>
+          <WhiteSpace size="lg"/>
+          {
+            this.props.team.list.length > 0 ?
+              <List>
+                {
+                  this.props.team.list.map((item) => {
+                    return (
+                      <Item arrow="horizontal"
+                            wrap key={item.member_id}
+                            onClick={this.handleClick.bind(this, item.member_id)}
+                      >
+                        {item.member_name}
+                      </Item>
+                    );
+                  })
+                }
+              </List>
+              :
+              ''
+          }
+          {
+            this.state.is_load && this.props.team.list.length == 0 ?
+              <view className={style.noData}>
+                <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
+                <view className={style.noDataText}>当前没有数据</view>
+              </view>
+              :
+              ''
+          }
         </div>
       </div>
     );
@@ -107,4 +110,4 @@ class TeamIndex extends Component {
 
 TeamIndex.propTypes = {};
 
-export default connect(({ team }) => ({ team }))(TeamIndex);
+export default connect(({team}) => ({team}))(TeamIndex);

@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 
-import { NavBar, WhiteSpace, List, Checkbox, Result } from 'antd-mobile';
+import {NavBar, WhiteSpace, List, Checkbox} from 'antd-mobile';
 
-import constant from '../util/constant';
-import database from '../util/database';
+import storage from '../util/storage';
 import http from '../util/http';
 import style from './style.css';
 
@@ -61,7 +60,7 @@ class DeliveryIndex extends Component {
     if (this.props.params.type.indexOf('check_') > -1) {
       this.props.dispatch(routerRedux.push({
         pathname: '/order/check',
-        pathname: `/${this.props.params.type.replace('_', '/').replace('_', '/')}`,
+        pathname: '/' + this.props.params.type.replace('_', '/').replace('_', '/'),
         query: {},
       }));
     }
@@ -76,14 +75,14 @@ class DeliveryIndex extends Component {
 
   handleAdd() {
     this.props.dispatch(routerRedux.push({
-      pathname: `/delivery/add/${this.props.params.type}`,
+      pathname: '/delivery/add/' + this.props.params.type,
       query: {},
     }));
   }
 
   handleEdit(delivery_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: `/delivery/edit/${this.props.params.type}/${delivery_id}`,
+      pathname: '/delivery/edit/' + this.props.params.type + '/' + delivery_id,
       query: {},
     }));
   }
@@ -93,7 +92,7 @@ class DeliveryIndex extends Component {
       delivery_id: delivery.delivery_id,
     });
 
-    database.setDelivery(delivery);
+    storage.setDelivery(delivery);
 
     setTimeout(() => {
       this.handleBack();
@@ -112,45 +111,50 @@ class DeliveryIndex extends Component {
           rightContent={[<div onClick={this.handleAdd.bind(this)} key="add">新增</div>]}
         >我的地址</NavBar>
         <div className={style.page}>
-          <WhiteSpace size="lg" />
-          <List>
-            {
-              this.props.delivery.list.map((item) => {
-                return (
-                  this.state.is_list ?
-                    <Item
-                      key={item.delivery_id} arrow={this.state.is_list ? 'horizontal' : 'empty'} wrap
-                      onClick={this.handleEdit.bind(this, item.delivery_id)}
-                    >
-                      <div>{item.delivery_name} {item.delivery_phone}</div>
-                      <div className={style.deliveryAddress}>{item.delivery_address}</div>
-                    </Item>
-                    :
-                    <CheckboxItem
-                      key={item.delivery_id}
-                      wrap
-                      activeStyle={{
-                        backgroundColor: '#ffffff',
-                      }}
-                      checked={this.state.delivery_id == item.delivery_id}
-                      onChange={this.handleChange.bind(this, item)}
-                    >
-                      <div>{item.delivery_name} {item.delivery_phone}</div>
-                      <div className={style.deliveryAddress}>{item.delivery_address}</div>
-                    </CheckboxItem>
-                );
-              })
-            }
-            {
-              this.state.is_load && this.props.delivery.list.length == 0 ?
-                <Result
-                  img={<img src={require('../assets/svg/empty.svg')} style={{ width: '1.2rem', height: '1.2rem' }} />}
-                  message={constant.empty}
-                />
-                :
-                ''
-            }
-          </List>
+          <WhiteSpace size="lg"/>
+          {
+            this.props.delivery.list.length > 0 ?
+              <List>
+                {
+                  this.props.delivery.list.map((item) => {
+                    return (
+                      this.state.is_list ?
+                        <Item
+                          key={item.delivery_id} arrow={this.state.is_list ? 'horizontal' : 'empty'} wrap
+                          onClick={this.handleEdit.bind(this, item.delivery_id)}
+                        >
+                          <div>{item.delivery_name} {item.delivery_phone}</div>
+                          <div className={style.deliveryAddress}>{item.delivery_address}</div>
+                        </Item>
+                        :
+                        <CheckboxItem
+                          key={item.delivery_id}
+                          wrap
+                          activeStyle={{
+                            backgroundColor: '#ffffff',
+                          }}
+                          checked={this.state.delivery_id == item.delivery_id}
+                          onChange={this.handleChange.bind(this, item)}
+                        >
+                          <div>{item.delivery_name} {item.delivery_phone}</div>
+                          <div className={style.deliveryAddress}>{item.delivery_address}</div>
+                        </CheckboxItem>
+                    );
+                  })
+                }
+              </List>
+              :
+              ''
+          }
+          {
+            this.state.is_load && this.props.delivery.list.length == 0 ?
+              <view className={style.noData}>
+                <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
+                <view className={style.noDataText}>当前没有数据</view>
+              </view>
+              :
+              ''
+          }
         </div>
       </div>
     );
@@ -159,4 +163,4 @@ class DeliveryIndex extends Component {
 
 DeliveryIndex.propTypes = {};
 
-export default connect(({ delivery }) => ({ delivery }))(DeliveryIndex);
+export default connect(({delivery}) => ({delivery}))(DeliveryIndex);

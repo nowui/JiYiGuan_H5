@@ -4,7 +4,7 @@ import { routerRedux } from 'dva/router';
 
 import { TabBar } from 'antd-mobile';
 
-import database from '../util/database';
+import storage from '../util/storage';
 
 class Main extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Main extends Component {
 
     this.state = {
       selectedTab: this.props.routes[2].path,
-      cart_count: database.getCartList().length,
+      cart_count: storage.getCart().length,
     };
   }
 
@@ -30,14 +30,14 @@ class Main extends Component {
     });
 
     this.props.dispatch(routerRedux.push({
-      pathname: `/${tab}`,
+      pathname: '/' + tab,
       query: {},
     }));
   }
 
   handlCart() {
     this.setState({
-      cart_count: database.getCartList().length,
+      cart_count: storage.getCart().length,
     });
   }
 
@@ -58,11 +58,11 @@ class Main extends Component {
         >
           <TabBar.Item
             title="首页"
-            key="home"
-            icon={require('../assets/svg/home.svg')}
-            selectedIcon={require('../assets/svg/home_active.svg')}
-            selected={this.state.selectedTab === 'home'}
-            onPress={this.handlePress.bind(this, 'home')}
+            key="index"
+            icon={require('../assets/svg/index.svg')}
+            selectedIcon={require('../assets/svg/index_active.svg')}
+            selected={this.state.selectedTab === 'index'}
+            onPress={this.handlePress.bind(this, 'index')}
           />
           <TabBar.Item
             title="购物车"

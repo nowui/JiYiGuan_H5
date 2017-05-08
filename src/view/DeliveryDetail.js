@@ -6,7 +6,6 @@ import { createForm } from 'rc-form';
 import { Toast, Modal, NavBar, WhiteSpace, List, InputItem, Picker, Switch, Button } from 'antd-mobile';
 
 import constant from '../util/constant';
-import database from '../util/database';
 import validate from '../util/validate';
 import china from '../util/china';
 import http from '../util/http';
@@ -50,7 +49,7 @@ class DeliveryDetail extends Component {
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: `/delivery/index/${this.props.params.type}`,
+      pathname: '/delivery/index/' + this.props.params.type,
       query: {},
     }));
   }
@@ -74,8 +73,6 @@ class DeliveryDetail extends Component {
             },
             success: function (data) {
               Toast.success('删除成功', constant.duration);
-
-              database.setDelivery(data);
 
               setTimeout(() => {
                 this.handleBack();
@@ -153,14 +150,10 @@ class DeliveryDetail extends Component {
         }
 
         http({
-          url: `/delivery/${action}`,
+          url: '/delivery/' + action,
           data: values,
           success: function (data) {
             Toast.success('保存成功', constant.duration);
-
-            if (data.delivery_is_default) {
-              database.setDelivery(data);
-            }
 
             setTimeout(() => {
               this.handleBack();

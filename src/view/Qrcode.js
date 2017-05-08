@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 
-import { NavBar, WhiteSpace } from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
 
-import database from '../util/database';
 import http from '../util/http';
 import style from './style.css';
 
@@ -18,9 +17,7 @@ class Qrcode extends Component {
   }
 
   componentDidMount() {
-    if (database.getMemberLevel().member_level_value < 3) {
-      this.handleLoad();
-    }
+    this.handleLoad();
   }
 
   componentWillUnmount() {
@@ -32,8 +29,6 @@ class Qrcode extends Component {
       url: '/member/qrcode/find',
       data: {},
       success: function (data) {
-        database.setSceneQrcode(data);
-
         this.setState({
           qrcode: data,
         });

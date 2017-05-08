@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 
-import { NavBar, WhiteSpace, List } from 'antd-mobile';
+import {NavBar, WhiteSpace, List} from 'antd-mobile';
 
 import constant from '../util/constant';
-import database from '../util/database';
+import storage from '../util/storage';
 import http from '../util/http';
 
 import style from './style.css';
@@ -61,7 +61,7 @@ class OrderDetail extends Component {
       url: '/order/pay',
       data: {
         order_id: this.props.params.order_id,
-        open_id: database.getWeChatOpenId(),
+        open_id: storage.getOpenId(),
         pay_type: 'H5',
       },
       success: function (data) {
@@ -94,7 +94,7 @@ class OrderDetail extends Component {
       },
       (res) => {
         if (res.err_msg == 'get_brand_wcpay_request:ok') {
-          database.setProduct([]);
+          storage.setProduct([]);
 
           this.props.dispatch(routerRedux.push({
             pathname: `/order/result/detail/${data.orderId}`,
@@ -117,7 +117,7 @@ class OrderDetail extends Component {
           onLeftClick={this.handleBack.bind(this)}
         >订单详情</NavBar>
         <div className={style.page}>
-          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg"/>
           <List>
             <Item>
               <div>
@@ -126,7 +126,7 @@ class OrderDetail extends Component {
               </div>
             </Item>
           </List>
-          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg"/>
           <List>
             {
               this.state.order.product_list.map((item) => {
@@ -145,7 +145,7 @@ class OrderDetail extends Component {
               })
             }
           </List>
-          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg"/>
           <List>
             <Item extra={`￥${this.state.order.order_product_amount.toFixed(2)}`}>
               商品金额
@@ -155,7 +155,7 @@ class OrderDetail extends Component {
             </Item>
           </List>
 
-          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg"/>
           <List />
         </div>
         {

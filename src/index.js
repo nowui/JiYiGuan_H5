@@ -12,15 +12,13 @@ const app = dva({});
 // app.use({});
 
 // 3. Model
-app.model(require('./model/home'));
+app.model(require('./model/index'));
 app.model(require('./model/category'));
-app.model(require('./model/apply'));
 app.model(require('./model/order'));
 app.model(require('./model/delivery'));
 app.model(require('./model/favor'));
 app.model(require('./model/team'));
 app.model(require('./model/bill'));
-app.model(require('./model/amount'));
 app.model(require('./model/my'));
 
 // 4. Router

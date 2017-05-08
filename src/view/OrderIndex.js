@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 
-import { NavBar, WhiteSpace, List, Result, Tabs } from 'antd-mobile';
+import {NavBar, List, Tabs} from 'antd-mobile';
 
-import constant from '../util/constant';
 import http from '../util/http';
 
 import style from './style.css';
@@ -109,37 +108,42 @@ class OrderIndex extends Component {
         >我的订单</NavBar>
         <div className={style.page}>
           <Tabs activeKey={this.state.order_flow} animated={false} onTabClick={this.handleTab.bind(this)}>
-            <TabPane tab="全部订单" key="ALL" />
-            <TabPane tab="代付款" key="WAIT_PAY" />
-            <TabPane tab="代发货" key="WAIT_SEND" />
-            <TabPane tab="代收货" key="WAIT_RECEIVE" />
-            <TabPane tab="已完成" key="FINISH" />
+            <TabPane tab="全部订单" key="ALL"/>
+            <TabPane tab="代付款" key="WAIT_PAY"/>
+            <TabPane tab="代发货" key="WAIT_SEND"/>
+            <TabPane tab="代收货" key="WAIT_RECEIVE"/>
+            <TabPane tab="已完成" key="FINISH"/>
           </Tabs>
-          <List>
-            {
-              this.state.order_list.map((item) => {
-                return (
-                  <Item
-                    wrap arrow="horizontal" key={item.order_id}
-                    onClick={this.handleClick.bind(this, item.order_id)}
-                  >
-                    <div>单号： {item.order_number}</div>
-                    <div>姓名： {item.order_delivery_name}</div>
-                    <div>地址： <span className={style.deliveryAddress}>{item.order_delivery_address}</span></div>
-                  </Item>
-                );
-              })
-            }
-            {
-              this.state.is_load && this.state.order_list.length == 0 ?
-                <Result
-                  img={<img src={require('../assets/svg/empty.svg')} style={{ width: '1.2rem', height: '1.2rem' }} />}
-                  message={constant.empty}
-                />
-                :
-                ''
-            }
-          </List>
+          {
+            this.state.order_list.length > 0 ?
+              <List>
+                {
+                  this.state.order_list.map((item) => {
+                    return (
+                      <Item
+                        wrap arrow="horizontal" key={item.order_id}
+                        onClick={this.handleClick.bind(this, item.order_id)}
+                      >
+                        <div>单号： {item.order_number}</div>
+                        <div>姓名： {item.order_delivery_name}</div>
+                        <div>地址： <span className={style.deliveryAddress}>{item.order_delivery_address}</span></div>
+                      </Item>
+                    );
+                  })
+                }
+              </List>
+              :
+              ''
+          }
+          {
+            this.state.is_load && this.state.order_list.length == 0 ?
+              <view className={style.noData}>
+                <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
+                <view className={style.noDataText}>当前没有数据</view>
+              </view>
+              :
+              ''
+          }
         </div>
       </div>
     );
@@ -148,4 +152,4 @@ class OrderIndex extends Component {
 
 OrderIndex.propTypes = {};
 
-export default connect(({ order }) => ({ order }))(OrderIndex);
+export default connect(({order}) => ({order}))(OrderIndex);

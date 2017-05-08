@@ -1,15 +1,8 @@
-import constant from '../util/constant';
-
 export default {
-
   namespace: 'bill',
 
   state: {
-    is_load: false,
-    list: [],
-    total: 0,
-    page_index: 1,
-    page_size: constant.page_size,
+    list: []
   },
 
   reducers: {

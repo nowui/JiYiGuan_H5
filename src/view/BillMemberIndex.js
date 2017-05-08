@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Checkbox, Result} from 'antd-mobile';
+import {NavBar, WhiteSpace, List, Checkbox} from 'antd-mobile';
 
-import constant from '../util/constant';
 import http from '../util/http';
 import style from './style.css';
 
@@ -69,27 +68,32 @@ class BillMember extends Component {
         >他的账单</NavBar>
         <div className={style.page}>
           <WhiteSpace size="lg"/>
-          <List>
-            {
-              this.state.list.map(function (item) {
-                return (
-                  <Item wrap key={item.bill_id}
-                        onClick={this.handleClick.bind(this, item.bill_id)}>
-                    {item.bill_name}
-                  </Item>
-                )
-              }.bind(this))
-            }
-            {
-              this.state.is_load && this.state.list.length == 0 ?
-                <Result
-                  img={<img src={require('../assets/svg/empty.svg')} style={{width: '1.2rem', height: '1.2rem'}}/>}
-                  message={constant.empty}
-                />
-                :
-                ''
-            }
-          </List>
+          {
+            this.state.list.length > 0 ?
+              <List>
+                {
+                  this.state.list.map(function (item) {
+                    return (
+                      <Item wrap key={item.bill_id}
+                            onClick={this.handleClick.bind(this, item.bill_id)}>
+                        {item.bill_name}
+                      </Item>
+                    )
+                  }.bind(this))
+                }
+              </List>
+              :
+              ''
+          }
+          {
+            this.state.is_load && this.state.list.length == 0 ?
+              <view className={style.noData}>
+                <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
+                <view className={style.noDataText}>当前没有数据</view>
+              </view>
+              :
+              ''
+          }
         </div>
       </div>
     );

@@ -60,9 +60,9 @@ class OrderResult extends Component {
     }).post();
   }
 
-  handleHome() {
+  handleIndex() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/home',
+      pathname: '/index',
       query: {},
     }));
   }
@@ -123,7 +123,7 @@ class OrderResult extends Component {
               ''
           }
           <div style={{ margin: '100px 10px 0px 10px' }}>
-            <Button type="primary" onClick={this.handleHome.bind(this)}>返回首页</Button>
+            <Button type="primary" onClick={this.handleIndex.bind(this)}>返回首页</Button>
           </div>
           <div style={{ margin: '40px 10px 0px 10px' }}>
             <Button onClick={this.handleOrder.bind(this)}>查看订单</Button>

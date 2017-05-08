@@ -2,22 +2,19 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {Toast, NavBar, WhiteSpace, List, Popup, Badge} from 'antd-mobile';
+import {NavBar, WhiteSpace, List, Badge} from 'antd-mobile';
 
-import Login from './Login';
-
-import constant from '../util/constant';
+import storage from '../util/storage';
 import http from '../util/http';
-import database from '../util/database';
 
 import style from './style.css';
 
-class Mine extends Component {
+class My extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      is_login: database.getToken() != ''
+
     };
   }
 
@@ -51,120 +48,46 @@ class Mine extends Component {
     }).post();
   }
 
-  handleMine() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else if (database.getMemberLevel().member_level_value < 3) {
-      this.props.dispatch(routerRedux.push({
-        pathname: '/bill/index',
-        query: {},
-      }));
-    }
+  handleBill() {
+    this.props.dispatch(routerRedux.push({
+      pathname: '/bill/index',
+      query: {},
+    }));
   }
 
   handleOrder(order_status) {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else {
-      this.props.dispatch(routerRedux.push({
-        pathname: `/order/index/${order_status}`,
-        query: {},
-      }));
-    }
+    this.props.dispatch(routerRedux.push({
+      pathname: `/order/index/${order_status}`,
+      query: {},
+    }));
   }
 
   handleDelivery() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else {
-      this.props.dispatch(routerRedux.push({
-        pathname: '/delivery/index/list',
-        query: {},
-      }));
-    }
+    this.props.dispatch(routerRedux.push({
+      pathname: '/delivery/index/list',
+      query: {},
+    }));
   }
 
   handleFavor() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else {
-      this.props.dispatch(routerRedux.push({
-        pathname: '/favor/index',
-        query: {},
-      }));
-    }
+    this.props.dispatch(routerRedux.push({
+      pathname: '/favor/index',
+      query: {},
+    }));
   }
 
   handleQrcode() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else if (database.getMemberLevel().member_level_value < 3) {
-      this.props.dispatch(routerRedux.push({
-        pathname: '/qrcode',
-        query: {},
-      }));
-    }
+    this.props.dispatch(routerRedux.push({
+      pathname: '/qrcode',
+      query: {},
+    }));
   }
 
   handleTeam() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else {
-      this.props.dispatch(routerRedux.push({
-        pathname: '/team/index',
-        query: {},
-      }));
-    }
-  }
-
-  handleBill() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)}/>, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else {
-      this.props.dispatch(routerRedux.push({
-        pathname: '/bill/index',
-        query: {},
-      }));
-    }
-  }
-
-  handleLogout() {
-    database.removeWeChatOpenId();
-    database.removeToken();
-    database.removeDelivery();
-
-    this.setState({
-      is_login: false,
-    });
-
-    Toast.success('退出成功', constant.duration);
-  }
-
-  handleLoginSucess() {
-    this.setState({
-      is_login: true,
-    });
+    this.props.dispatch(routerRedux.push({
+      pathname: '/team/index',
+      query: {},
+    }));
   }
 
   render() {
@@ -177,32 +100,17 @@ class Mine extends Component {
           <WhiteSpace size="lg"/>
           <List>
             <Item
-              onClick={this.handleMine.bind(this)}
+              onClick={this.handleBill.bind(this)}
               extra="账单"
               arrow="horizontal"
             >
-              {
-                this.state.is_login ?
-                  <div className={style.avatar}>
-                    <img src={database.getUserAvatar()} style={{width: '100%', height: '100%'}}/>
-                  </div>
-                  :
-                  '请登录平台'
-              }
-              {
-                this.state.is_login ?
-                  <div className={style.name}>{database.getUserName()}</div>
-                  :
-                  ''
-              }
-              {
-                this.state.is_login ?
-                  <div className={style.totalAmount}>
-                    账户余额：<span className={style.money}>￥{this.props.my.member_total_amount.toFixed(2)}</span>
-                  </div>
-                  :
-                  ''
-              }
+              <div className={style.avatar}>
+                <img src={storage.getMember().user_avatar} style={{width: '100%', height: '100%'}}/>
+              </div>
+              <div className={style.name}>{storage.getMember().user_name}</div>
+              <div className={style.totalAmount}>
+                账户余额：<span className={style.money}>￥{this.props.my.member_total_amount.toFixed(2)}</span>
+              </div>
             </Item>
           </List>
           <WhiteSpace size="lg"/>
@@ -240,13 +148,13 @@ class Mine extends Component {
             </Item>
           </List>
           {
-            database.getMemberLevel().member_level_value < 3 ?
+            storage.getMember().member_level_value < 3 ?
               <WhiteSpace size="lg"/>
               :
               ''
           }
           {
-            database.getMemberLevel().member_level_value < 3 ?
+            storage.getMember().member_level_value < 3 ?
               <List>
                 <Item
                   thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
@@ -285,6 +193,6 @@ class Mine extends Component {
   }
 }
 
-Mine.propTypes = {};
+My.propTypes = {};
 
-export default connect(({my}) => ({my}))(Mine);
+export default connect(({my}) => ({my}))(My);

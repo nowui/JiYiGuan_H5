@@ -3,12 +3,10 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { createForm } from 'rc-form';
 
-import { Toast, NavBar, WhiteSpace, List, TextareaItem, Popup, Modal } from 'antd-mobile';
-
-import Login from './Login';
+import { Toast, NavBar, WhiteSpace, List, TextareaItem, Modal } from 'antd-mobile';
 
 import constant from '../util/constant';
-import database from '../util/database';
+import storage from '../util/storage';
 import http from '../util/http';
 
 import style from './style.css';
@@ -28,15 +26,13 @@ class OrderCheck extends Component {
         delivery_address: '',
       },
       product_list: [],
-      productTotal: 0,
+      product_total: 0,
       freight: 0,
       total: 0,
     };
   }
 
   componentDidMount() {
-    this.handleReset();
-
     http({
       url: '/order/check',
       data: {
@@ -45,8 +41,9 @@ class OrderCheck extends Component {
       success: function (data) {
         var is_pay = true;
         var is_delivery = false;
-        var product_list = database.getProduct();
-        var freight = 0;
+        var product_list = storage.getProduct();
+        var product_total = 0;
+        var freight = data.freight;
         var total = 0;
 
         if (data.delivery_name == '') {
@@ -82,13 +79,14 @@ class OrderCheck extends Component {
         for (var i = 0; i < product_list.length; i++) {
           const product = product_list[i];
 
-          const product_total_price = product.product_quantity * product.product_price[0].product_price;
+          product_total += product.product_quantity * product.product_price[0].product_price;
 
           product.product_total_price = product_total_price.toFixed(2);
-          total += product_total_price;
         }
 
-        if (!total > 0) {
+        total = product_total + freight;
+
+        if (!product_total > 0) {
           is_pay = false;
         }
 
@@ -97,6 +95,7 @@ class OrderCheck extends Component {
           is_delivery,
           delivery,
           product_list,
+          product_total: product_total.toFixed(2),
           freight: new Number(freight).toFixed(2),
           total: total.toFixed(2),
         });
@@ -108,20 +107,7 @@ class OrderCheck extends Component {
   }
 
   componentWillUnmount() {
-    Popup.hide();
-  }
 
-  handleReset() {
-    var productTotal = 0;
-    for (var i = 0; i < this.state.product_list.length; i++) {
-      productTotal += this.state.product_list[i].product_price[0].product_price * this.state.product_list[i].product_quantity;
-    }
-
-    this.setState({
-      delivery: database.getDelivery(),
-      productTotal,
-      total: productTotal + this.state.freight,
-    });
   }
 
   handleBack() {
@@ -143,36 +129,15 @@ class OrderCheck extends Component {
     }
   }
 
-  handleLoginSucess() {
-    this.handleReset();
-  }
-
   handleDelivery() {
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)} />, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-    } else {
-      this.props.dispatch(routerRedux.push({
-        pathname: `/delivery/index/order_check_${this.props.params.type}`,
-        query: {},
-      }));
-    }
+    this.props.dispatch(routerRedux.push({
+      pathname: `/delivery/index/order_check_${this.props.params.type}`,
+      query: {},
+    }));
   }
 
   handlePay() {
     if (!this.state.is_pay) {
-      return;
-    }
-
-
-    if (database.getToken() == '') {
-      Popup.show(<Login type="PRODUCT" data={''} handleLoginSucess={this.handleLoginSucess.bind(this)} />, {
-        animationType: 'slide-up',
-        maskClosable: false,
-      });
-
       return;
     }
 
@@ -204,7 +169,7 @@ class OrderCheck extends Component {
         order_message: this.props.form.getFieldValue('order_message'),
         order_pay_type: 'WECHAT_PAY',
         product_list,
-        open_id: database.getWeChatOpenId(),
+        open_id: storage.getOpenId(),
         pay_type: 'H5',
       },
       success: function (data) {
@@ -236,7 +201,7 @@ class OrderCheck extends Component {
         paySign: data.paySign,
       },
       (res) => {
-        database.setProduct([]);
+        storage.setProduct([]);
 
         if (res.err_msg == 'get_brand_wcpay_request:ok') {
           this.props.dispatch(routerRedux.push({
@@ -302,7 +267,7 @@ class OrderCheck extends Component {
           </List>
           <WhiteSpace size="lg" />
           <List>
-            <Item extra={`￥${this.state.productTotal.toFixed(2)}`}>
+            <Item extra={`￥${this.state.product_total.toFixed(2)}`}>
               商品金额
             </Item>
             <Item extra={`￥${this.state.freight}`}>

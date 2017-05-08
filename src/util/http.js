@@ -1,18 +1,18 @@
 import fetch from 'dva/fetch';
-import { Toast } from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 
 import constant from './constant';
-import database from './database';
+import storage from './storage';
 
 const operation = (promise) => {
-  let hasCanceled_ = false;
+  var hasCanceled_ = false;
   const wrappedPromise = new Promise((resolve, reject) => {
     promise.then(val =>
-            hasCanceled_ ? reject({ isCanceled: true }) : resolve(val),
-        );
+      hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
+    );
     promise.catch(error =>
-            hasCanceled_ ? reject({ isCanceled: true }) : reject(error),
-        );
+      hasCanceled_ ? reject({isCanceled: true}) : reject(error),
+    );
   });
   return {
     promise: wrappedPromise,
@@ -27,7 +27,7 @@ export default function http(config) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Token: database.getToken(),
+      Token: storage.getToken(),
       Platform: constant.platform,
       Version: constant.version,
     },

@@ -86,7 +86,7 @@ class Category extends Component {
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/home',
+      pathname: '/index',
       query: {},
     }));
   }
@@ -107,7 +107,7 @@ class Category extends Component {
 
   handleProduct(product_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: `/product/detail/category_${this.state.category_id}/${product_id}`,
+      pathname: '/product/detail/category_${this.state.category_id}/' + product_id,
       query: {},
     }));
   }
@@ -125,14 +125,14 @@ class Category extends Component {
               return (
                 <div
                   className={style.productCard}
-                  style={{ width: `${(document.documentElement.clientWidth - 200 - 25) / 2}px`, margin: '7px 0 0 7px' }}
+                  style={{ width: (document.documentElement.clientWidth - 200 - 25) / 2 + 'px', margin: '7px 0 0 7px' }}
                   key={item.product_id}
                   onClick={this.handleProduct.bind(this, item.product_id)}
                 >
                   <img
                     style={{
-                      width: `${(document.documentElement.clientWidth - 200 - 25) / 2}px`,
-                      height: `${(document.documentElement.clientWidth - 200 - 25) / 2}px`,
+                      width: (document.documentElement.clientWidth - 200 - 25) / 2 + 'px',
+                      height: (document.documentElement.clientWidth - 200 - 25) / 2 + 'px',
                     }}
                     src={item.product_image_file}
                   />
@@ -147,7 +147,7 @@ class Category extends Component {
         <div className={style.categoryLeft}>
           {
             this.state.category_list.map((item) => {
-              const itemStyle = item.category_id == this.state.category_id ? `${style.categoryLeftItem} ${style.categoryLeftItemActive}` : style.categoryLeftItem;
+              const itemStyle = item.category_id == this.state.category_id ? style.categoryLeftItem + ' ' + style.categoryLeftItemActive : style.categoryLeftItem;
 
               return (
                 <div

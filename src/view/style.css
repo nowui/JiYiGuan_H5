@@ -6,6 +6,7 @@ body, html {
   top: 0px;
   left: 0px;
   right: 0px;
+  min-height: 100%;
   padding-top: 100px;
   padding-bottom: 100px;
   background-color: #f5f5f9;
@@ -123,7 +124,7 @@ body, html {
   color: #c81623;
 }
 
-.productHome {
+.productIndex {
   float: left;
   width: 20%;
   height: 100px;
@@ -132,7 +133,7 @@ body, html {
   background-color: #ffffff;
 }
 
-.productHome:before {
+.productIndex:before {
   content: " ";
   position: absolute;
   width: 40%;
@@ -437,4 +438,30 @@ body, html {
   margin-top: 20px;
   width: 60px;
   height: 60px;
+}
+.noData {
+
+}
+
+.noDataImageIcon {
+  position: absolute;
+  top: 50%;
+  margin-top: -200px;
+  left: 50%;
+  margin-left: -60px;
+  width: 120px;
+  height: 120px;
+}
+
+.noDataText {
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  height: 120px;
+  color: #888888;
+  font-size: 28px;
+  text-align: center;
 }

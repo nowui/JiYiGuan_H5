@@ -3,11 +3,10 @@
   "scripts": {
     "start": "PORT=8003 roadhog server",
     "build": "roadhog build",
-    "lint": "eslint --ext .js src test",
     "precommit": "npm run"
   },
   "dependencies": {
-    "antd-mobile": "^1.1.1",
+    "antd-mobile": "^1.1.2",
     "babel-runtime": "^6.9.2",
     "babel-plugin-import": "^1.1.0",
     "dva": "^1.2.1",

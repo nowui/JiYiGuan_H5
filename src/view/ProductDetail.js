@@ -4,7 +4,7 @@ import { routerRedux } from 'dva/router';
 import { NavBar, Carousel, List, Toast, Badge, WhiteSpace, Stepper } from 'antd-mobile';
 
 import constant from '../util/constant';
-import database from '../util/database';
+import storage from '../util/storage';
 import http from '../util/http';
 
 import style from './style.css';
@@ -15,7 +15,7 @@ class ProductDetail extends Component {
 
     this.state = {
       is_cart: true,
-      cart_count: database.getCartList().length,
+      cart_count: storage.getCart().length,
       product_quantity: 1,
       product: {
         product_image_file: '',
@@ -65,7 +65,7 @@ class ProductDetail extends Component {
   handleBack() {
     if (this.props.params.type == 'home') {
       this.props.dispatch(routerRedux.push({
-        pathname: '/home',
+        pathname: '/index',
         query: {},
       }));
     }
@@ -80,7 +80,7 @@ class ProductDetail extends Component {
 
   handleSubmit() {
     if (this.state.is_cart) {
-      database.addCart({
+      storage.addCart({
         product_id: this.state.product.product_id,
         product_name: this.state.product.product_name,
         product_image_file: this.state.product.product_image_file,
@@ -91,10 +91,10 @@ class ProductDetail extends Component {
       });
 
       this.setState({
-        cart_count: database.getCartList().length,
+        cart_count: storage.getCart().length,
       });
     } else {
-      database.setProduct([{
+      storage.setProduct([{
         product_id: this.state.product.product_id,
         product_name: this.state.product.product_name,
         product_image_file: this.state.product.product_image_file,
@@ -120,7 +120,7 @@ class ProductDetail extends Component {
   }
 
   handleCart() {
-    database.addCart({
+    storage.addCart({
       product_id: this.state.product.product_id,
       product_name: this.state.product.product_name,
       product_image_file: this.state.product.product_image_file,
@@ -131,15 +131,15 @@ class ProductDetail extends Component {
     });
 
     this.setState({
-      cart_count: database.getCartList().length,
+      cart_count: storage.getCart().length,
     });
 
     Toast.success('加入成功', constant.duration);
   }
 
-  handleHome() {
+  handleIndex() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/home',
+      pathname: '/index',
       query: {},
     }));
   }
@@ -149,7 +149,7 @@ class ProductDetail extends Component {
   }
 
   handleBuy() {
-    database.setProduct([{
+    storage.setProduct([{
       product_id: this.state.product.product_id,
       product_name: this.state.product.product_name,
       product_image_file: this.state.product.product_image_file,
@@ -236,8 +236,8 @@ class ProductDetail extends Component {
           />
         </div>
         <div className={style.footer}>
-          <div className={style.productHome} onClick={this.handleHome.bind(this)}>
-            <img className={style.productIcon} src={require('../assets/svg/home.svg')} />
+          <div className={style.productIndex} onClick={this.handleIndex.bind(this)}>
+            <img className={style.productIcon} src={require('../assets/svg/index.svg')} />
             <div className={style.productFont}>首页</div>
           </div>
           <div className={style.productFavor} onClick={this.handleFavor.bind(this)}>
