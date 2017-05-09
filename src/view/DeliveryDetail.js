@@ -234,7 +234,7 @@ class DeliveryDetail extends Component {
               extra={<Switch
                 {...getFieldProps('delivery_is_default', {
                   valuePropName: 'checked',
-                  initialValue: false,
+                  initialValue: true,
                 })}
               />}
             >设为默认地址</List.Item>

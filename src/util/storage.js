@@ -102,7 +102,11 @@ function getDelivery() {
   var delivery = localStorage.getItem(delivery_key);
 
   if (delivery == null) {
-    return {};
+    return {
+      delivery_name: '',
+      delivery_phone: '',
+      delivery_address: ''
+    };
   }
 
   return JSON.parse(delivery);
@@ -110,6 +114,10 @@ function getDelivery() {
 
 function setDelivery(delivery) {
   localStorage.setItem(delivery_key, JSON.stringify(delivery));
+}
+
+function removeDelivery() {
+  wx.removeStorageSync(delivery_key);
 }
 
 function getMember() {
@@ -154,6 +162,7 @@ module.exports = {
   removeCart: removeCart,
   getDelivery: getDelivery,
   setDelivery: setDelivery,
+  removeDelivery: removeDelivery,
   getMember: getMember,
   setMember: setMember
 };

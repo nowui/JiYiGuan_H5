@@ -4,6 +4,7 @@ import {routerRedux} from 'dva/router';
 
 import {NavBar, List, Tabs} from 'antd-mobile';
 
+import constant from '../util/constant';
 import http from '../util/http';
 
 import style from './style.css';
@@ -115,25 +116,45 @@ class OrderIndex extends Component {
             <TabPane tab="已完成" key="FINISH"/>
           </Tabs>
           {
-            this.state.order_list.length > 0 ?
-              <List>
-                {
-                  this.state.order_list.map((item) => {
-                    return (
-                      <Item
-                        wrap arrow="horizontal" multipleLine key={item.order_id}
-                        onClick={this.handleClick.bind(this, item.order_id)}
-                      >
-                        <div>单号： {item.order_number}</div>
-                        <div>姓名： {item.order_delivery_name}</div>
-                        <div>地址： <span className={style.deliveryAddress}>{item.order_delivery_address}</span></div>
-                      </Item>
-                    );
-                  })
+            this.state.order_list.map((order) => {
+              var order_status = '';
+              var order_status_list = constant.order_status_list;
+              for(var i = 0; i < order_status_list.length; i++) {
+                if (order_status_list[i].order_status_value == order.order_flow) {
+                  order_status = order_status_list[i].order_status_name;
+
+                  break;
                 }
-              </List>
-              :
-              ''
+              }
+
+              return (
+                <List style={{marginTop: '30px'}} key={order.order_id} onClick={this.handleClick.bind(this, order.order_id)}>
+                  <Item extra={order_status}>
+                    {order.order_number}
+                  </Item>
+                  {
+                    order.product_list.map((product) => {
+                      return (
+                        <Item
+                          key={product.product_id}
+                        >
+                          <div className={style.avatar}>
+                            <img src={constant.host + product.product_image_file} style={{width: '100%', height: '100%'}}/>
+                          </div>
+                          <div className={style.name}>{product.product_name}</div>
+                          <div className={style.totalAmount}>
+                            ￥{product.product_price} X {product.product_quantity}
+                          </div>
+                        </Item>
+                      );
+                    })
+                  }
+                  <Item>
+                    <span style={{fontSize: '28px'}}>共{order.product_list.length}件商品，合计：￥{order.order_amount}</span>
+                  </Item>
+                </List>
+              );
+            })
           }
           {
             this.state.is_load && this.state.order_list.length == 0 ?

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
+import storage from '../util/storage';
 import style from './style.css';
 
 class Home extends Component {
@@ -14,10 +15,12 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(routerRedux.push({
-      pathname: '/index',
-      query: {},
-    }));
+    if (storage.getToken() != '') {
+      this.props.dispatch(routerRedux.push({
+        pathname: '/index',
+        query: {},
+      }));
+    }
   }
 
   componentWillUnmount() {

@@ -39,6 +39,14 @@ class OrderDetail extends Component {
         order_id: this.props.params.order_id,
       },
       success: function (data) {
+        var order_status_list = constant.order_status_list;
+        for(var i = 0; i < order_status_list.length; i++) {
+          if (order_status_list[i].order_status_value == data.order_flow) {
+            data.order_flow_text = order_status_list[i].order_status_name;
+
+            break;
+          }
+        }
         this.setState({
           order: data,
         });
@@ -117,6 +125,12 @@ class OrderDetail extends Component {
           onLeftClick={this.handleBack.bind(this)}
         >订单详情</NavBar>
         <div className={style.page}>
+          <WhiteSpace size="lg"/>
+          <List>
+            <Item>
+              您的订单：{this.state.order.order_flow_text}
+            </Item>
+          </List>
           <WhiteSpace size="lg"/>
           <List>
             <Item>

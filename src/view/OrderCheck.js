@@ -70,34 +70,42 @@ class OrderCheck extends Component {
           is_delivery = true;
         }
 
-        const delivery = {
-          delivery_name: data.delivery_name,
-          delivery_phone: data.delivery_phone,
-          delivery_address: data.delivery_address,
-        };
+        var delivery;
 
-        for (var i = 0; i < product_list.length; i++) {
-          const product = product_list[i];
-
-          product_total += product.product_quantity * product.product_price[0].product_price;
-
-          product.product_total_price = product_total_price.toFixed(2);
+        if (storage.getDelivery().delivery_name == '') {
+          delivery = {
+            delivery_name: data.delivery_name,
+            delivery_phone: data.delivery_phone,
+            delivery_address: data.delivery_address,
+          };
+        } else {
+          delivery = storage.getDelivery();
         }
 
-        total = product_total + freight;
+        for (var i = 0; i < product_list.length; i++) {
+          var product = product_list[i];
+
+          var product_total_price = product.product_quantity * product.product_price[0].product_price;
+
+          product.product_total_price = product_total_price.toFixed(2);
+
+          product_total += product_total_price;
+        }
+
+        total = parseFloat(product_total) + parseFloat(freight);
 
         if (!product_total > 0) {
           is_pay = false;
         }
 
         this.setState({
-          is_pay,
-          is_delivery,
-          delivery,
-          product_list,
+          is_pay: is_pay,
+          is_delivery: is_delivery,
+          delivery: delivery,
+          product_list: product_list,
           product_total: product_total.toFixed(2),
           freight: new Number(freight).toFixed(2),
-          total: total.toFixed(2),
+          total: new Number(total).toFixed(2)
         });
       }.bind(this),
       complete() {
@@ -202,6 +210,7 @@ class OrderCheck extends Component {
       },
       (res) => {
         storage.setProduct([]);
+        storage.removeDelivery();
 
         if (res.err_msg == 'get_brand_wcpay_request:ok') {
           this.props.dispatch(routerRedux.push({
@@ -267,7 +276,7 @@ class OrderCheck extends Component {
           </List>
           <WhiteSpace size="lg" />
           <List>
-            <Item extra={'￥' + this.state.product_total.toFixed(2)}>
+            <Item extra={'￥' + this.state.product_total}>
               商品金额
             </Item>
             <Item extra={'￥' + this.state.freight}>
