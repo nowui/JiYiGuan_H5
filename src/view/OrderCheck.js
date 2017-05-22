@@ -33,6 +33,8 @@ class OrderCheck extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     http({
       url: '/order/check',
       data: {
@@ -208,7 +210,7 @@ class OrderCheck extends Component {
         signType: data.signType,
         paySign: data.paySign,
       },
-      (res) => {
+      function (res) {
         storage.setProduct([]);
         storage.removeDelivery();
 
@@ -223,7 +225,7 @@ class OrderCheck extends Component {
             query: {},
           }));
         }
-      },
+      }.bind(this)
     );
   }
 

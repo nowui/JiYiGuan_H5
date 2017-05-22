@@ -25,6 +25,8 @@ class OrderDetail extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     this.handleLoad();
   }
 
@@ -48,7 +50,7 @@ class OrderDetail extends Component {
           }
         }
         this.setState({
-          order: data,
+          order: data
         });
       }.bind(this),
       complete() {
@@ -145,14 +147,14 @@ class OrderDetail extends Component {
             {
               this.state.order.product_list.map((item) => {
                 return (
-                  <Item key={item.product_id} extra={'￥' + (item.product_quantity * item.product_price).toFixed(2)}>
+                  <Item key={item.product_id} extra={'￥' + (item.order_product_price * item.order_product_quantity).toFixed(2)}>
                     <img
                       className={style.productListImage}
                       src={constant.host + item.product_image_file}
                     />
                     <div className={style.productListText}>
                       {item.product_name}
-                      <div>× {item.product_quantity}</div>
+                      <div>× {item.order_product_quantity}</div>
                     </div>
                   </Item>
                 );

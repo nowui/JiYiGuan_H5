@@ -19,6 +19,8 @@ class FavorIndex extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     // this.handleLoad();
   }
 

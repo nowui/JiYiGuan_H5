@@ -20,6 +20,8 @@ class DeliveryIndex extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     if (this.props.params.type == 'list') {
       this.setState({
         is_list: true,

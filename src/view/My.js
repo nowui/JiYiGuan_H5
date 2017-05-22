@@ -19,6 +19,8 @@ class My extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     this.handleLoad();
   }
 
@@ -34,12 +36,7 @@ class My extends Component {
       success: function (data) {
         this.props.dispatch({
           type: 'my/fetch',
-          data: {
-            member_total_amount: data.member_total_amount,
-            WAIT_PAY: data.WAIT_PAY,
-            WAIT_SEND: data.WAIT_SEND,
-            WAIT_RECEIVE: data.WAIT_RECEIVE,
-          },
+          data: data
         });
       }.bind(this),
       complete() {
@@ -105,9 +102,9 @@ class My extends Component {
               arrow="horizontal"
             >
               <div className={style.avatar}>
-                <img src={storage.getMember().user_avatar} style={{width: '100%', height: '100%'}}/>
+                <img src={this.props.my.user_avatar} style={{width: '100%', height: '100%'}}/>
               </div>
-              <div className={style.name}>{storage.getMember().user_name}</div>
+              <div className={style.name}>{this.props.my.user_name}</div>
               <div className={style.totalAmount}>
                 账户余额：<span className={style.money}>￥{this.props.my.member_total_amount.toFixed(2)}</span>
               </div>
@@ -148,13 +145,13 @@ class My extends Component {
             </Item>
           </List>
           {
-            storage.getMember().member_level_value < 3 ?
+            storage.getMember().member_level_value < 4 ?
               <WhiteSpace size="lg"/>
               :
               ''
           }
           {
-            storage.getMember().member_level_value < 3 ?
+            storage.getMember().member_level_value < 4 ?
               <List>
                 <Item
                   thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"

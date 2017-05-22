@@ -21,7 +21,7 @@ function getToken() {
 
   if (token == null) {
     if (constant.is_developer) {
-      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTQyNTc2ODQsImV4cCI6MTUyNTc5MzY4NCwiYXV0aG9yaXphdGlvbl9pZCI6IjA0NTI4MTAyZDMwODQwZGFhNWUyYWMzZTg4ODM2N2U5IiwidXNlcl9pZCI6Ijk4Yjc3OGIxMTc1MDRjOTg4MWIzOGQ5OTE0ZDdmOTZkIn0.hSlb0WMcz3wWSBMOOUm8krupBSZ6VEYNiGAFZP04vUuEuCqNEoEJNsNJn7FprODyoqFl8Skv-315_3EFEbu1iA';
+      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTQ5ODQ2NTMsImV4cCI6MTUyNjUyMDY1MywiYXV0aG9yaXphdGlvbl9pZCI6ImIwZmEwZjVlYzlmNjRiNTliYzA3M2RmNDUwNzI1ZjA5IiwidXNlcl9pZCI6ImU0ZmMzYzkzOTdhMjQ3YjU5ZTZiMGExZGU0ZTI5MzViIn0.iWn0pgFrFBIlC-BwXCLkov1p6RbP8MR6Is5w_q48HCVvDgM0OteJvaRUJ8bWUzuuPHbdN3e2A4b4kTr-TIBfYQ';
     } else {
       return '';
     }
@@ -51,7 +51,7 @@ function setProduct(product) {
 }
 
 function removeProduct() {
-  wx.removeStorageSync(product_key);
+  localStorage.removeItem(product_key);
 }
 
 function getCart() {
@@ -95,7 +95,7 @@ function addCart(product) {
 }
 
 function removeCart() {
-  wx.removeStorageSync(cart_key);
+  localStorage.removeItem(cart_key);
 }
 
 function getDelivery() {
@@ -117,7 +117,7 @@ function setDelivery(delivery) {
 }
 
 function removeDelivery() {
-  wx.removeStorageSync(delivery_key);
+  localStorage.removeItem(delivery_key);
 }
 
 function getMember() {

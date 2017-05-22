@@ -22,7 +22,7 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-
+    document.body.scrollTop = 0;
   }
 
   componentWillUnmount() {
@@ -127,7 +127,7 @@ class Cart extends Component {
       }
     }
 
-    storage.setCart(cart);
+    storage.setCart(cart_list);
 
     this.props.handlCart();
 

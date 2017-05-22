@@ -19,6 +19,8 @@ class TeamIndex extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     this.handleLoad();
   }
 
@@ -28,7 +30,7 @@ class TeamIndex extends Component {
 
   handleLoad() {
     http({
-      url: '/member/team/list',
+      url: '/order/team/list',
       data: {
         page_index: 1,
         page_size: 10,
@@ -81,7 +83,9 @@ class TeamIndex extends Component {
                   this.props.team.list.map((item) => {
                     return (
                       <Item arrow="horizontal"
-                            extra={'￥' + item.member_total_amount.toFixed(2)}
+                            extra={<div className={style.teamMoney}>
+                              <div>计提：￥{item.member_total_amount.toFixed(2)}</div>
+                            </div>}
                             wrap key={item.member_id}
                             onClick={this.handleClick.bind(this, item.member_id)}
                       >

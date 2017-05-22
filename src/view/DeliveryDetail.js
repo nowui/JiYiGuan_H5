@@ -19,6 +19,8 @@ class DeliveryDetail extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     if (this.props.route.path.indexOf('/edit/') > -1) {
       this.handleLoad();
     } else {

@@ -21,6 +21,8 @@ class Category extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     var category_id = '0';
     var category_list = constant.category_list.concat();
     var product_list = [];

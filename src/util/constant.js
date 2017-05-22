@@ -8,7 +8,7 @@ export default {
   placeholder: '请输入',
   empty: '当前没有数据',
   platform: 'H5',
-  version: '1.0.1',
+  version: '1.0.2',
   // is_developer: true,
   is_developer: false,
   // host: 'http://localhost:8080',
@@ -50,15 +50,15 @@ export default {
     order_status_image: ''
   }, {
     order_status_value: 'WAIT_PAY',
-    order_status_name: '代付款',
+    order_status_name: '待付款',
     order_status_image: '/image/pay.svg'
   }, {
     order_status_value: 'WAIT_SEND',
-    order_status_name: '代发货',
+    order_status_name: '待发货',
     order_status_image: '/image/send.svg'
   }, {
     order_status_value: 'WAIT_RECEIVE',
-    order_status_name: '代收货',
+    order_status_name: '待收货',
     order_status_image: '/image/deliver.svg'
   }, {
     order_status_value: 'FINISH',

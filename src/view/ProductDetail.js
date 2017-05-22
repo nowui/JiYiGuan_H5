@@ -28,6 +28,8 @@ class ProductDetail extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     this.handleLoad();
   }
 
@@ -183,7 +185,7 @@ class ProductDetail extends Component {
             onClick={this.handleGo.bind(this)}
           /></Badge>]}
         >商品详情</NavBar>
-        <div className={style.page}>
+        <div className={style.page2}>
           {
             this.state.product.product_image_file_list.length == 0 ?
               ''
