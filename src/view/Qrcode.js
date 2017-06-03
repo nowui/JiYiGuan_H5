@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 
-import { NavBar } from 'antd-mobile';
+import {NavBar, Modal} from 'antd-mobile';
 
 import http from '../util/http';
 import style from './style.css';
+
+const prompt = Modal.prompt;
 
 class Qrcode extends Component {
   constructor(props) {
@@ -48,6 +50,20 @@ class Qrcode extends Component {
     }));
   }
 
+  handleTeam() {
+    prompt(
+      '输入密码',
+      '',
+      function (password) {
+        this.props.dispatch(routerRedux.push({
+          pathname: '/team/index',
+          query: {},
+        }));
+      }.bind(this),
+      'secure-text',
+    )
+  }
+
   render() {
     return (
       <div>
@@ -62,10 +78,13 @@ class Qrcode extends Component {
               :
               <img
                 src={this.state.qrcode} style={{
-                  width: '100%',
-                }}
+                width: '100%',
+              }}
               />
           }
+          <div style={{width: '100%', height: '200px'}} onClick={this.handleTeam.bind(this)}>
+
+          </div>
         </div>
       </div>
     );

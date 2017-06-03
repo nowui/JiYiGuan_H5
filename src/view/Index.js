@@ -19,10 +19,10 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = this.props.index.scroll_top;
+
     if (this.props.index.list.length == 0) {
       this.handleLoad();
-    } else {
-      document.body.scrollTop = this.props.index.scroll_top;
     }
 
     var category_list = constant.category_list.concat();
@@ -60,7 +60,7 @@ class Index extends Component {
         });
       }.bind(this),
       complete: function () {
-        document.body.scrollTop = this.props.index.scroll_top;
+
       }.bind(this),
     }).post();
   }

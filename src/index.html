@@ -2,7 +2,7 @@
 <html style="font-size: 100px;">
 <head>
   <meta charset="UTF-8">
-  <title>上海星销</title>
+  <title>济颐馆</title>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -130,7 +130,15 @@
   function handleProgress(event) {
     var progressBar = document.getElementById("progressBar");
     if (progressBar != null) {
-      document.getElementById("progressBar").style.width = preload.progress * 100 + "%";
+      var progress = preload.progress;
+
+      if (progress == 0.5) {
+        progress = 0.9;
+      } else {
+        document.getElementById("progressBar").style.animation = "animate-positive 0.3s";
+      }
+
+      document.getElementById("progressBar").style.width = progress * 100 + "%";
     }
   }
 

@@ -79,7 +79,7 @@ class BillIndex extends Component {
                 {
                   this.props.bill.list.map(function (item) {
                     return (
-                      <Item arrow="horizontal"  onClick={this.handleClick.bind(this, item.bill_id)}
+                      <Item key={item.bill_id} arrow="horizontal"  onClick={this.handleClick.bind(this, item.bill_id)}
                             extra={(item.bill_is_income ? '+' : '-') + '￥' + item.bill_amount.toFixed(2)}>
                         {
                           item.bill_type == 'ORDER' ? '订单' : ''

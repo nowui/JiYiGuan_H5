@@ -80,13 +80,6 @@ class My extends Component {
     }));
   }
 
-  handleTeam() {
-    this.props.dispatch(routerRedux.push({
-      pathname: '/team/index',
-      query: {},
-    }));
-  }
-
   render() {
     const Item = List.Item;
 
@@ -158,12 +151,6 @@ class My extends Component {
                   onClick={this.handleQrcode.bind(this)}
                 >
                   我的二维码
-                </Item>
-                <Item
-                  thumb={require('../assets/svg/friend.svg')} arrow="horizontal"
-                  onClick={this.handleTeam.bind(this)}
-                >
-                  我的团队
                 </Item>
               </List>
               :

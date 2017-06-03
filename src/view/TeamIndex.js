@@ -30,7 +30,7 @@ class TeamIndex extends Component {
 
   handleLoad() {
     http({
-      url: '/order/team/list',
+      url: '/member/team/list',
       data: {
         page_index: 1,
         page_size: 10,
@@ -53,7 +53,7 @@ class TeamIndex extends Component {
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/my',
+      pathname: '/qrcode',
       query: {},
     }));
   }
