@@ -20,6 +20,7 @@ app.model(require('./model/favor'));
 app.model(require('./model/team'));
 app.model(require('./model/bill'));
 app.model(require('./model/my'));
+app.model(require('./model/story'));
 
 // 4. Router
 app.router(require('./router'));
@@ -28,4 +29,4 @@ setTimeout(() => {
   document.getElementById("loading").remove();
 
   app.start('#root');
-}, 0.3);
+}, 300);

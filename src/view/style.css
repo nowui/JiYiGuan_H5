@@ -502,3 +502,39 @@ body, html {
   height: 50px;
   font-size: 28px;
 }
+
+.articleImage {
+  width: 120px;
+  height: 120px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.articleName {
+  position: absolute;
+  top: 35px;
+  left: 140px;
+  width: 120px;
+  height: 50px;
+  font-size: 28px;
+}
+
+.articleSummary {
+  position: absolute;
+  top: 95px;
+  left: 140px;
+  right: 55px;
+  height: 50px;
+  font-size: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.articleContent {
+  font-size: 28px;
+}
+
+.articleContent img {
+  width: 100%;
+}

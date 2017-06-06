@@ -19,12 +19,18 @@ import TeamIndex from './view/TeamIndex';
 import BillIndex from './view/BillIndex';
 import BillMemberIndex from './view/BillMemberIndex';
 import Qrcode from './view/Qrcode';
+import StoryIndex from './view/StoryIndex';
+import StoryDetail from './view/StoryDetail';
 
 import wechat from './util/wechat';
 
 export default function ({ history }) {
   const handleEnter = function (next, replace, callback) {
-    wechat.auth();
+    if (next.location.pathname.indexOf('/story/index') > -1) {
+
+    } else {
+      wechat.auth();
+    }
 
     callback();
   };
@@ -57,6 +63,8 @@ export default function ({ history }) {
         <Route path="bill/index" component={BillIndex} />
         <Route path="bill/member/index/:member_id" component={BillMemberIndex} />
         <Route path="qrcode" component={Qrcode} />
+        <Route path="story/index" component={StoryIndex} />
+        <Route path="story/detail/:index" component={StoryDetail} />
       </Route>
     </Router>
   );
