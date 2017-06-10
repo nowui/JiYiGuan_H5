@@ -21,6 +21,7 @@ app.model(require('./model/team'));
 app.model(require('./model/bill'));
 app.model(require('./model/my'));
 app.model(require('./model/story'));
+app.model(require('./model/science'));
 
 // 4. Router
 app.router(require('./router'));

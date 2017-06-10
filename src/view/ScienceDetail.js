@@ -6,7 +6,7 @@ import {NavBar} from 'antd-mobile';
 
 import style from './style.css';
 
-class StoryDetail extends Component {
+class ScienceDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +19,7 @@ class StoryDetail extends Component {
     document.body.scrollTop = 0;
 
     this.setState({
-      article: this.props.story.list[this.props.params.index]
+      article: this.props.science.list[this.props.params.index]
     });
   }
 
@@ -46,6 +46,6 @@ class StoryDetail extends Component {
   }
 }
 
-StoryDetail.propTypes = {};
+ScienceDetail.propTypes = {};
 
-export default connect(({story}) => ({story}))(StoryDetail);
+export default connect(({science}) => ({science}))(ScienceDetail);

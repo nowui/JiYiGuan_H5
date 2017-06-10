@@ -112,9 +112,9 @@ class OrderIndex extends Component {
         <div className={style.page}>
           <Tabs activeKey={this.state.order_flow} animated={false} onTabClick={this.handleTab.bind(this)}>
             <TabPane tab="全部订单" key="ALL"/>
-            <TabPane tab="代付款" key="WAIT_PAY"/>
-            <TabPane tab="代发货" key="WAIT_SEND"/>
-            <TabPane tab="代收货" key="WAIT_RECEIVE"/>
+            <TabPane tab="待付款" key="WAIT_PAY"/>
+            <TabPane tab="待发货" key="WAIT_SEND"/>
+            <TabPane tab="待收货" key="WAIT_RECEIVE"/>
             <TabPane tab="已完成" key="FINISH"/>
           </Tabs>
           {

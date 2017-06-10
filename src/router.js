@@ -21,6 +21,8 @@ import BillMemberIndex from './view/BillMemberIndex';
 import Qrcode from './view/Qrcode';
 import StoryIndex from './view/StoryIndex';
 import StoryDetail from './view/StoryDetail';
+import ScienceIndex from './view/ScienceIndex';
+import ScienceDetail from './view/ScienceDetail';
 
 import wechat from './util/wechat';
 
@@ -65,6 +67,8 @@ export default function ({ history }) {
         <Route path="qrcode" component={Qrcode} />
         <Route path="story/index" component={StoryIndex} />
         <Route path="story/detail/:index" component={StoryDetail} />
+        <Route path="science/index" component={ScienceIndex} />
+        <Route path="science/detail/:index" component={ScienceDetail} />
       </Route>
     </Router>
   );

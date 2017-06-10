@@ -9,7 +9,7 @@ import http from '../util/http';
 
 import style from './style.css';
 
-class StoryIndex extends Component {
+class ScienceIndex extends Component {
   constructor(props) {
     super(props);
 
@@ -19,9 +19,9 @@ class StoryIndex extends Component {
   }
 
   componentDidMount() {
-    document.body.scrollTop = this.props.story.scroll_top;
+    document.body.scrollTop = this.props.science.scroll_top;
 
-    if (this.props.story.list.length == 0) {
+    if (this.props.science.list.length == 0) {
       this.handleLoad();
     }
 
@@ -36,7 +36,7 @@ class StoryIndex extends Component {
 
   componentWillUnmount() {
     this.props.dispatch({
-      type: 'story/fetch',
+      type: 'science/fetch',
       data: {
         scroll_top: document.body.scrollTop
       },
@@ -45,7 +45,7 @@ class StoryIndex extends Component {
 
   handleLoad() {
     http({
-      url: '/article/story/list',
+      url: '/article/science/list',
       data: {
 
       },
@@ -55,7 +55,7 @@ class StoryIndex extends Component {
         }
 
         this.props.dispatch({
-          type: 'story/fetch',
+          type: 'science/fetch',
           data: {
             list: data
           }
@@ -69,7 +69,7 @@ class StoryIndex extends Component {
 
   handleArticle(article_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: '/story/detail/' + article_id,
+      pathname: '/science/detail/' + article_id,
       query: {}
     }));
   }
@@ -79,11 +79,11 @@ class StoryIndex extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}>睡前故事</NavBar>
+        <NavBar className={style.header} mode="light" iconName={false}>医学科普</NavBar>
         <div className={style.page}>
           <List>
             {
-              this.props.story.list.map((item, index) => {
+              this.props.science.list.map((item, index) => {
                 return (
                   <Item
                     key={item.article_id}
@@ -106,6 +106,6 @@ class StoryIndex extends Component {
   }
 }
 
-StoryIndex.propTypes = {};
+ScienceIndex.propTypes = {};
 
-export default connect(({story}) => ({story}))(StoryIndex);
+export default connect(({science}) => ({science}))(ScienceIndex);
