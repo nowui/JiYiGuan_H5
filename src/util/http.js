@@ -1,80 +1,52 @@
-import fetch from 'dva/fetch';
+import reqwest from 'reqwest';
 import {Toast} from 'antd-mobile';
 
 import constant from './constant';
 import storage from './storage';
 
-const operation = (promise) => {
-  var hasCanceled_ = false;
-  const wrappedPromise = new Promise((resolve, reject) => {
-    promise.then(val =>
-      hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
-    );
-    promise.catch(error =>
-      hasCanceled_ ? reject({isCanceled: true}) : reject(error),
-    );
-  });
-  return {
-    promise: wrappedPromise,
-    cancel() {
-      hasCanceled_ = true;
-    },
-  };
-};
+function request(config) {
+  if (typeof(config.is_toast) == 'undefined') {
+    config.is_toast = true;
+  }
 
-export default function http(config) {
-  const request = operation(fetch(constant.host + config.url, {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Token: storage.getToken(),
-      Platform: constant.platform,
-      Version: constant.version,
-    },
+  if (config.is_toast) {
+    Toast.loading('加载中..', 0);
+  }
+
+  reqwest({
+    url: constant.host + config.url,
+    type: 'json',
     method: 'POST',
-    mode: 'cors',
-    body: JSON.stringify(config.data),
-  }));
-
-  return {
-    post() {
-      if (typeof(config.is_toast) == 'undefined') {
-        config.is_toast = true;
-      }
-
-      if (config.is_toast) {
-        Toast.loading('加载中..', 0);
-      }
-
-      request.promise.then((response) => {
-        if (response.status !== 200) {
-          return;
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Token': storage.getToken(),
+      'Platform': constant.platform,
+      'Version': constant.version
+    },
+    data: JSON.stringify(config.data),
+    success: function (response) {
+      if (response.code == 200) {
+        if (config.is_toast) {
+          Toast.hide();
         }
-        response.json().then((json) => {
-          if (json.code == 200) {
-            if (config.is_toast) {
-              Toast.hide();
-            }
 
-            config.success(json.data);
-          } else {
-            Toast.fail(json.message, constant.duration);
-          }
-
-          config.complete();
-        });
-      }).catch((error) => {
-        Toast.fail(constant.error, constant.duration);
-
-        setTimeout(() => {
-          config.complete();
-        }, constant.timeout);
-      });
-
-      return request;
+        config.success(response.data);
+      } else {
+        if (storage.getToken() != '') {
+          Toast.fail(response.message, constant.duration);
+        }
+      }
     },
-    cancel() {
-      request.cancel();
+    error: function () {
+      Toast.fail(constant.error, constant.duration);
     },
-  };
+    complete: function () {
+      config.complete();
+    }
+  });
 }
+
+module.exports = {
+  request: request
+};

@@ -33,7 +33,7 @@ class DeliveryDetail extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/delivery/find',
       data: {
         delivery_id: this.props.params.delivery_id,
@@ -46,7 +46,7 @@ class DeliveryDetail extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBack() {
@@ -68,7 +68,7 @@ class DeliveryDetail extends Component {
         text: '确定',
         style: { fontWeight: 'bold' },
         onPress: function () {
-          http({
+          http.request({
             url: '/delivery/delete',
             data: {
               delivery_id: this.props.params.delivery_id,
@@ -83,7 +83,7 @@ class DeliveryDetail extends Component {
             complete() {
 
             },
-          }).post();
+          });
         }.bind(this),
       },
     ]);
@@ -151,7 +151,7 @@ class DeliveryDetail extends Component {
           values.delivery_id = this.props.params.delivery_id;
         }
 
-        http({
+        http.request({
           url: '/delivery/' + action,
           data: values,
           success: function (data) {
@@ -164,7 +164,7 @@ class DeliveryDetail extends Component {
           complete() {
 
           },
-        }).post();
+        });
       }
     });
   }

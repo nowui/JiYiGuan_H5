@@ -8,11 +8,12 @@ export default {
     member_level_id: '',
     member_level_name: '',
     member_level_value: 999,
-    member_total_amount: 0,
-    member_status: false,
-    WAIT_PAY: 0,
-    WAIT_SEND: 0,
-    WAIT_RECEIVE: 0
+    member_commission_amount: 0,
+    member_order_amount: 0,
+    member_wait_pay: 0,
+    member_wait_send: 0,
+    member_wait_receive: 0,
+    member_status: false
   },
 
   reducers: {

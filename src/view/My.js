@@ -4,7 +4,6 @@ import {routerRedux} from 'dva/router';
 
 import {NavBar, WhiteSpace, List, Badge} from 'antd-mobile';
 
-import storage from '../util/storage';
 import http from '../util/http';
 
 import style from './style.css';
@@ -29,7 +28,7 @@ class My extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       is_toast: false,
       url: '/member/my/find',
       data: {},
@@ -42,7 +41,7 @@ class My extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBill() {
@@ -99,7 +98,7 @@ class My extends Component {
               </div>
               <div className={style.name}>{this.props.my.user_name}</div>
               <div className={style.totalAmount}>
-                账户余额：<span className={style.money}>￥{this.props.my.member_total_amount.toFixed(2)}</span>
+                消费：<span className={style.money}>￥{this.props.my.member_order_amount.toFixed(2)}</span>
               </div>
             </Item>
           </List>
@@ -114,19 +113,19 @@ class My extends Component {
             </Item>
             <Item style={{paddingLeft: '60px'}}>
               <div className={style.mineOrderItem} onClick={this.handleOrder.bind(this, 'WAIT_PAY')}>
-                <Badge text={this.props.my.WAIT_PAY}>
+                <Badge text={this.props.my.member_wait_pay}>
                   <img src={require('../assets/svg/pay.svg')}/>
                 </Badge>
                 <div className={style.mineOrderItemText}>待付款</div>
               </div>
               <div className={style.mineOrderItem} onClick={this.handleOrder.bind(this, 'WAIT_SEND')}>
-                <Badge text={this.props.my.WAIT_SEND}>
+                <Badge text={this.props.my.member_wait_send}>
                   <img src={require('../assets/svg/send.svg')}/>
                 </Badge>
                 <div className={style.mineOrderItemText}>待发货</div>
               </div>
               <div className={style.mineOrderItem} onClick={this.handleOrder.bind(this, 'WAIT_RECEIVE')}>
-                <Badge text={this.props.my.WAIT_RECEIVE}>
+                <Badge text={this.props.my.member_wait_receive}>
                   <img src={require('../assets/svg/deliver.svg')}/>
                 </Badge>
                 <div className={style.mineOrderItemText}>待收货</div>
@@ -137,25 +136,6 @@ class My extends Component {
               </div>
             </Item>
           </List>
-          {
-            storage.getMember().member_level_value < 4 ?
-              <WhiteSpace size="lg"/>
-              :
-              ''
-          }
-          {
-            storage.getMember().member_level_value < 4 ?
-              <List>
-                <Item
-                  thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
-                  onClick={this.handleQrcode.bind(this)}
-                >
-                  我的二维码
-                </Item>
-              </List>
-              :
-              ''
-          }
           <WhiteSpace size="lg"/>
           <List>
             <Item
@@ -171,6 +151,25 @@ class My extends Component {
               我的收藏
             </Item>
           </List>
+          {
+            this.props.my.member_level_value < 4 ?
+              <WhiteSpace size="lg"/>
+              :
+              ''
+          }
+          {
+            this.props.my.member_level_value < 4 ?
+              <List>
+                <Item
+                  thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
+                  onClick={this.handleQrcode.bind(this)}
+                >
+                  我的二维码
+                </Item>
+              </List>
+              :
+              ''
+          }
         </div>
       </div>
     );

@@ -44,8 +44,8 @@ class Index extends Component {
   }
 
   handleLoad() {
-    http({
-      url: '/product/hot/list',
+    http.request({
+      url: '/product/all/list',
       data: {},
       success: function (data) {
         for (var i = 0; i < data.length; i++) {
@@ -62,7 +62,7 @@ class Index extends Component {
       complete: function () {
 
       }.bind(this),
-    }).post();
+    });
   }
 
   handleCategory(category_id) {

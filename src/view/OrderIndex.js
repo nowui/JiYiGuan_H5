@@ -31,7 +31,7 @@ class OrderIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/order/list',
       data: {
         page_index: 1,
@@ -63,7 +63,7 @@ class OrderIndex extends Component {
           is_load: true,
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleBack() {

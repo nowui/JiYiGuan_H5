@@ -29,7 +29,7 @@ class BillIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/bill/list',
       data: {
         page_index: 0,
@@ -48,7 +48,7 @@ class BillIndex extends Component {
           is_load: true
         });
       }.bind(this)
-    }).post();
+    });
   }
 
   handleBack() {

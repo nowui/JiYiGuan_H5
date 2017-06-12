@@ -44,7 +44,7 @@ class StoryIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/article/story/list',
       data: {
 
@@ -64,7 +64,7 @@ class StoryIndex extends Component {
       complete: function () {
 
       }.bind(this),
-    }).post();
+    });
   }
 
   handleArticle(article_id) {

@@ -120,34 +120,6 @@ function removeDelivery() {
   localStorage.removeItem(delivery_key);
 }
 
-function getMember() {
-  var member = localStorage.getItem(member_key);
-
-  if (member == null) {
-    if (constant.is_developer) {
-      return {
-        "user_name": "Ronaldo",
-        "user_avatar": "http://wx.qlogo.cn/mmopen/9FxxcxLpKVsTsPshsySRq7W5TDVr6dticxqKribaEGFfUthzxoRrbknym1beVH9mlE5MQtK1KqlyznRxMRpder6w7aEUXI5pEW/0",
-        "member_level_id": "675437f6b82e437d9c577a30d42516e9",
-        "member_level_value": "1"
-      };
-    } else {
-      return {
-        user_name: '',
-        user_avatar: '',
-        member_level_id: '',
-        member_level_value: 999
-      };
-    }
-  }
-
-  return JSON.parse(member);
-}
-
-function setMember(member) {
-  localStorage.setItem(member_key, JSON.stringify(member));
-}
-
 module.exports = {
   getOpenId: getOpenId,
   setOpenId: setOpenId,
@@ -162,7 +134,5 @@ module.exports = {
   removeCart: removeCart,
   getDelivery: getDelivery,
   setDelivery: setDelivery,
-  removeDelivery: removeDelivery,
-  getMember: getMember,
-  setMember: setMember
+  removeDelivery: removeDelivery
 };

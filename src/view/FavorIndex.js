@@ -29,7 +29,7 @@ class FavorIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/favor/list',
       data: {
         page_index: 1,
@@ -48,7 +48,7 @@ class FavorIndex extends Component {
           is_load: true,
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleBack() {

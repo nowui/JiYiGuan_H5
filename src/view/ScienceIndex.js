@@ -44,7 +44,7 @@ class ScienceIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/article/science/list',
       data: {
 
@@ -64,7 +64,7 @@ class ScienceIndex extends Component {
       complete: function () {
 
       }.bind(this),
-    }).post();
+    });
   }
 
   handleArticle(article_id) {

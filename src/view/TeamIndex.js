@@ -29,7 +29,7 @@ class TeamIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/member/team/list',
       data: {
         page_index: 1,
@@ -48,7 +48,7 @@ class TeamIndex extends Component {
           is_load: true,
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleBack() {

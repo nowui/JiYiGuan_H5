@@ -31,7 +31,7 @@ class OrderResult extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/order/confirm',
       data: {
         order_id: this.props.params.order_id,
@@ -59,7 +59,7 @@ class OrderResult extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleIndex() {

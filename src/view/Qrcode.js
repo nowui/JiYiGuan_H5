@@ -29,7 +29,7 @@ class Qrcode extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/member/qrcode/find',
       data: {},
       success: function (data) {
@@ -40,7 +40,7 @@ class Qrcode extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBack() {

@@ -36,7 +36,7 @@ class DeliveryIndex extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/delivery/list',
       data: {
         page_index: 1,
@@ -55,7 +55,7 @@ class DeliveryIndex extends Component {
           is_load: true,
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleBack() {

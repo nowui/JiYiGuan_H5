@@ -35,7 +35,7 @@ class OrderDetail extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/order/find',
       data: {
         order_id: this.props.params.order_id,
@@ -56,7 +56,7 @@ class OrderDetail extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBack() {
@@ -67,7 +67,7 @@ class OrderDetail extends Component {
   }
 
   handlePay() {
-    http({
+    http.request({
       url: '/order/pay',
       data: {
         order_id: this.props.params.order_id,
@@ -89,7 +89,7 @@ class OrderDetail extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   onBridgeReady(data) {

@@ -53,7 +53,7 @@ class Category extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/product/all/list',
       data: {},
       success: function (data) {
@@ -83,7 +83,7 @@ class Category extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBack() {

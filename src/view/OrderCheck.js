@@ -35,7 +35,7 @@ class OrderCheck extends Component {
   componentDidMount() {
     document.body.scrollTop = 0;
 
-    http({
+    http.request({
       url: '/order/check',
       data: {
         product_list: [],
@@ -113,7 +113,7 @@ class OrderCheck extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   componentWillUnmount() {
@@ -170,7 +170,7 @@ class OrderCheck extends Component {
       Toast.fail('请选购商品', constant.duration);
     }
 
-    http({
+    http.request({
       url: '/order/save',
       data: {
         order_delivery_name: this.state.delivery.delivery_name,
@@ -197,7 +197,7 @@ class OrderCheck extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   onBridgeReady(data) {

@@ -28,7 +28,7 @@ class BillMember extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/bill/member/list',
       data: {
         member_id: this.props.params.member_id,
@@ -45,7 +45,7 @@ class BillMember extends Component {
           is_load: true
         });
       }.bind(this)
-    }).post();
+    });
   }
 
   handleBack() {

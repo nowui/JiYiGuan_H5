@@ -38,7 +38,7 @@ class ProductDetail extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/product/find',
       data: {
         product_id: this.props.params.product_id,
@@ -61,7 +61,7 @@ class ProductDetail extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBack() {
