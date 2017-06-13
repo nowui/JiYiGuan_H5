@@ -28,7 +28,7 @@ import wechat from './util/wechat';
 
 export default function ({ history }) {
   const handleEnter = function (next, replace, callback) {
-    if (next.location.pathname.indexOf('/story/index') > -1) {
+    if (next.location.pathname.indexOf('/story/') > -1 || next.location.pathname.indexOf('/science/') > -1) {
 
     } else {
       wechat.auth();
@@ -66,9 +66,9 @@ export default function ({ history }) {
         <Route path="bill/member/index/:member_id" component={BillMemberIndex} />
         <Route path="qrcode" component={Qrcode} />
         <Route path="story/index" component={StoryIndex} />
-        <Route path="story/detail/:index" component={StoryDetail} />
+        <Route path="story/detail/:article_id" component={StoryDetail} />
         <Route path="science/index" component={ScienceIndex} />
-        <Route path="science/detail/:index" component={ScienceDetail} />
+        <Route path="science/detail/:article_id" component={ScienceDetail} />
       </Route>
     </Router>
   );

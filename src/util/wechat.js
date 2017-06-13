@@ -1,4 +1,5 @@
 import constant from './constant';
+import http from './http';
 import storage from './storage';
 
 function getQueryString(name) {
@@ -30,9 +31,74 @@ function auth() {
       storage.setToken(token);
     }
   }
+}
 
+function share() {
+  if (typeof(window.is_share) == 'undefined') {
+    window.is_share = true;
+  } else {
+    return;
+  }
+
+  var url = location.href;
+  var title = '福特途睿欧 邀您坐享其程';
+  var desc = '纯正欧系、非凡商务，与您一起畅享全新移动商务休闲新体验！';
+
+  if (url.indexOf('/?from=') > -1) {
+    url = url.replace('#/', '');
+    url = url.replace('/?from=', '/#/?from=');
+  }
+
+  http.request({
+    is_toast: false,
+    is_response: false,
+    url: '/wechat/share?url=' + url,
+    data: {
+
+    },
+    success: function (data) {
+      wx.config({
+        debug: false,
+        appId: "wx934f793803320ecd",
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+          'checkJsApi',
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareWeibo'
+        ]
+      });
+
+      window.share_config = {
+        "share": {
+          "imgUrl": "http://h5.fute.nowui.com/static/image/icon.jpg",
+          "desc": desc,
+          "title": title,
+          "link": window.location.href,
+          "success": function () {
+
+          },
+          'cancel': function () {
+
+          }
+        }
+      };
+      wx.ready(function () {
+        wx.onMenuShareAppMessage(share_config.share);
+        wx.onMenuShareTimeline(share_config.share);
+        wx.onMenuShareQQ(share_config.share);
+      });
+    }.bind(this),
+    complete: function () {
+
+    }.bind(this),
+  });
 }
 
 export default {
-  auth: auth
+  auth: auth,
+  share: share
 };

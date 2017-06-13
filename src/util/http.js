@@ -9,6 +9,10 @@ function request(config) {
     config.is_toast = true;
   }
 
+  if (typeof(config.is_response) == 'undefined') {
+    config.is_response = true;
+  }
+
   if (config.is_toast) {
     Toast.loading('加载中..', 0);
   }
@@ -26,16 +30,20 @@ function request(config) {
     },
     data: JSON.stringify(config.data),
     success: function (response) {
-      if (response.code == 200) {
-        if (config.is_toast) {
-          Toast.hide();
-        }
+      if (config.is_response) {
+        if (response.code == 200) {
+          if (config.is_toast) {
+            Toast.hide();
+          }
 
-        config.success(response.data);
-      } else {
-        if (storage.getToken() != '') {
-          Toast.fail(response.message, constant.duration);
+          config.success(response.data);
+        } else {
+          if (storage.getToken() != '') {
+            Toast.fail(response.message, constant.duration);
+          }
         }
+      } else {
+        config.success(response);
       }
     },
     error: function () {

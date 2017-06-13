@@ -534,7 +534,7 @@ body, html {
 }
 
 .articleContent {
-  font-size: 28px;
+  margin: 20px;
 }
 
 .articleContent img {

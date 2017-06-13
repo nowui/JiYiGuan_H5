@@ -6,6 +6,7 @@ import {List} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
+import wechat from '../util/wechat';
 
 import style from './style.css';
 
@@ -14,7 +15,7 @@ class ScienceIndex extends Component {
     super(props);
 
     this.state = {
-      category_list: [],
+
     };
   }
 
@@ -32,13 +33,7 @@ class ScienceIndex extends Component {
       this.handleLoad();
     }
 
-    var category_list = constant.category_list.concat();
-    category_list.splice(0, 1);
-    category_list.push(constant.category_list[0]);
-
-    this.setState({
-      category_list,
-    });
+    wechat.share();
   }
 
   componentWillUnmount() {
@@ -90,11 +85,11 @@ class ScienceIndex extends Component {
         <div className={style.page}>
           <List>
             {
-              this.props.science.list.map((item, index) => {
+              this.props.science.list.map((item) => {
                 return (
                   <Item
                     key={item.article_id}
-                    onClick={this.handleArticle.bind(this, index)}
+                    onClick={this.handleArticle.bind(this, item.article_id)}
                     arrow="horizontal"
                   >
                     <div className={style.articleImage}>

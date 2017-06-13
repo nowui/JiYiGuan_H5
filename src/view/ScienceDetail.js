@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
+import http from '../util/http';
+import wechat from '../util/wechat';
+
 import style from './style.css';
 
 class ScienceDetail extends Component {
@@ -23,13 +26,30 @@ class ScienceDetail extends Component {
 
     document.body.scrollTop = 0;
 
-    this.setState({
-      article: this.props.science.list[this.props.params.index]
-    });
+    this.handleLoad();
+
+    wechat.share();
   }
 
   componentWillUnmount() {
 
+  }
+
+  handleLoad() {
+    http.request({
+      url: '/article/find',
+      data: {
+        article_id: this.props.params.article_id
+      },
+      success: function (data) {
+        this.setState({
+          article: data
+        });
+      }.bind(this),
+      complete: function () {
+
+      }.bind(this),
+    });
   }
 
   handleBack() {
@@ -44,6 +64,7 @@ class ScienceDetail extends Component {
           {/*onLeftClick={this.handleBack.bind(this)}*/}
         {/*>{this.state.article.article_name}</NavBar>*/}
         <div className={style.page}>
+          <div style={{textAlign: 'center'}}><h1>{this.state.article.article_name}</h1></div>
           <div className={style.articleContent} dangerouslySetInnerHTML={{__html: this.state.article.article_content}}></div>
         </div>
       </div>
