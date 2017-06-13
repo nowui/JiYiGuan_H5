@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Badge} from 'antd-mobile';
+import {WhiteSpace, List, Badge} from 'antd-mobile';
 
 import http from '../util/http';
 
@@ -18,6 +18,13 @@ class My extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '个人中心'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -84,7 +91,7 @@ class My extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}>个人中心</NavBar>
+        {/*<NavBar className={style.header} mode="light" iconName={false}>个人中心</NavBar>*/}
         <div className={style.page2}>
           <WhiteSpace size="lg"/>
           <List>

@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { createForm } from 'rc-form';
 
-import { Toast, NavBar, WhiteSpace, List, TextareaItem, Modal } from 'antd-mobile';
+import { Toast, WhiteSpace, List, TextareaItem, Modal } from 'antd-mobile';
 
 import constant from '../util/constant';
 import storage from '../util/storage';
@@ -33,6 +33,13 @@ class OrderCheck extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '填写订单'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     http.request({
@@ -235,10 +242,10 @@ class OrderCheck extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >填写订单</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>填写订单</NavBar>*/}
         <div className={style.page}>
           <WhiteSpace size="lg" />
           <List>

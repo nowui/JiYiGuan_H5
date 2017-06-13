@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { NavBar, Carousel, List, Toast, Badge, WhiteSpace, Stepper } from 'antd-mobile';
+import { Carousel, List, Toast, WhiteSpace, Stepper } from 'antd-mobile';
 
 import constant from '../util/constant';
 import storage from '../util/storage';
@@ -28,6 +28,13 @@ class ProductDetail extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '商品详情'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -177,14 +184,14 @@ class ProductDetail extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-          rightContent={[<Badge key={1} text={this.state.cart_count} onClick={this.handleGo.bind(this)}><img
-            className={style.cartIcon} src={require('../assets/svg/cart.svg')}
-            onClick={this.handleGo.bind(this)}
-          /></Badge>]}
-        >商品详情</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+          {/*rightContent={[<Badge key={1} text={this.state.cart_count} onClick={this.handleGo.bind(this)}><img*/}
+            {/*className={style.cartIcon} src={require('../assets/svg/cart.svg')}*/}
+            {/*onClick={this.handleGo.bind(this)}*/}
+          {/*/></Badge>]}*/}
+        {/*>商品详情</NavBar>*/}
         <div className={style.page2}>
           {
             this.state.product.product_image_file_list.length == 0 ?

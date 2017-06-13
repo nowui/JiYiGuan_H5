@@ -7,7 +7,7 @@ body, html {
   left: 0px;
   right: 0px;
   min-height: 100%;
-  padding-top: 90px;
+  /*padding-top: 90px;*/
   background-color: #f5f5f9;
 }
 .page2 {
@@ -16,7 +16,7 @@ body, html {
   left: 0px;
   right: 0px;
   min-height: 100%;
-  padding-top: 90px;
+  /*padding-top: 90px;*/
   padding-bottom: 100px;
   background-color: #f5f5f9;
 }
@@ -353,7 +353,7 @@ body, html {
 
 .categoryLeft {
   position: absolute;
-  top: 100px;
+  top: 0px;
   left: 0px;
   bottom: 0px;
   width: 200px;
@@ -379,7 +379,7 @@ body, html {
 
 .categoryPage {
   position: absolute;
-  top: 100px;
+  top: 0px;
   right: 0px;
   bottom: 0px;
   left: 200px;
@@ -539,4 +539,13 @@ body, html {
 
 .articleContent img {
   width: 100%;
+}
+
+.footerButtom {
+  width: 100%;
+  height: 100px;
+  color: #ffffff;
+  line-height: 100px;
+  text-align: center;
+  background-color: #c81623;
 }

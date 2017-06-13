@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 
-import { NavBar } from 'antd-mobile';
-
 import constant from '../util/constant';
 import http from '../util/http';
 
@@ -21,6 +19,13 @@ class Category extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '商品分类'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     var category_id = '0';
@@ -117,10 +122,10 @@ class Category extends Component {
   render() {
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >商品分类</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>商品分类</NavBar>*/}
         <div className={style.categoryPage}>
           {
             this.state.product_list.map((item) => {

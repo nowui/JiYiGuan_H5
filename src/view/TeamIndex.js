@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List} from 'antd-mobile';
+import {WhiteSpace, List} from 'antd-mobile';
 
 import http from '../util/http';
 import style from './style.css';
@@ -19,6 +19,13 @@ class TeamIndex extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的团队'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -70,10 +77,10 @@ class TeamIndex extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >我的团队</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>我的团队</NavBar>*/}
         <div className={style.page}>
           <WhiteSpace size="lg"/>
           {

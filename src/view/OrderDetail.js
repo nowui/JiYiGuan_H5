@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List} from 'antd-mobile';
+import {WhiteSpace, List} from 'antd-mobile';
 
 import constant from '../util/constant';
 import storage from '../util/storage';
@@ -25,6 +25,13 @@ class OrderDetail extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '订单详情'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -122,10 +129,10 @@ class OrderDetail extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >订单详情</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>订单详情</NavBar>*/}
         <div className={style.page}>
           <WhiteSpace size="lg"/>
           <List>

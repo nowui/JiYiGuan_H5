@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, Carousel} from 'antd-mobile';
+import {Carousel} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
@@ -19,6 +19,13 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '商城首页'
+      },
+    });
+
     document.body.scrollTop = this.props.index.scroll_top;
 
     if (this.props.index.list.length == 0) {
@@ -82,7 +89,7 @@ class Index extends Component {
   render() {
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}>商城首页</NavBar>
+        {/*<NavBar className={style.header} mode="light" iconName={false}>商城首页</NavBar>*/}
         <div className={style.page2}>
           <Carousel autoplay infinite>
             <img

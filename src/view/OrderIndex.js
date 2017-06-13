@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, List, Tabs} from 'antd-mobile';
+import {List, Tabs} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
@@ -21,6 +21,13 @@ class OrderIndex extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的订单'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -105,10 +112,10 @@ class OrderIndex extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >我的订单</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>我的订单</NavBar>*/}
         <div className={style.page}>
           <Tabs activeKey={this.state.order_flow} animated={false} onTabClick={this.handleTab.bind(this)}>
             <TabPane tab="全部订单" key="ALL"/>

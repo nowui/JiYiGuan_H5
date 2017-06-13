@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Checkbox} from 'antd-mobile';
+import {WhiteSpace, List, Checkbox} from 'antd-mobile';
 
 import storage from '../util/storage';
 import http from '../util/http';
@@ -20,6 +20,13 @@ class DeliveryIndex extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的地址'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     if (this.props.params.type == 'list') {
@@ -107,12 +114,12 @@ class DeliveryIndex extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-          rightContent={[<div onClick={this.handleAdd.bind(this)} key="add">新增</div>]}
-        >我的地址</NavBar>
-        <div className={style.page}>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+          {/*rightContent={[<div onClick={this.handleAdd.bind(this)} key="add">新增</div>]}*/}
+        {/*>我的地址</NavBar>*/}
+        <div className={style.page2}>
           <WhiteSpace size="lg"/>
           {
             this.props.delivery.list.length > 0 ?
@@ -157,6 +164,9 @@ class DeliveryIndex extends Component {
               :
               ''
           }
+        </div>
+        <div className={style.footer}>
+          <div className={style.footerButtom} onClick={this.handleAdd.bind(this)}>新建收货地址</div>
         </div>
       </div>
     );

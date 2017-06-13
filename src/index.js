@@ -12,6 +12,7 @@ const app = dva({});
 // app.use({});
 
 // 3. Model
+app.model(require('./model/main'));
 app.model(require('./model/index'));
 app.model(require('./model/category'));
 app.model(require('./model/order'));

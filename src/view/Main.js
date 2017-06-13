@@ -4,15 +4,13 @@ import { routerRedux } from 'dva/router';
 
 import { TabBar } from 'antd-mobile';
 
-import storage from '../util/storage';
-
 class Main extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedTab: this.props.routes[2].path,
-      cart_count: storage.getCart().length,
+      title: '',
+      selectedTab: this.props.routes[2].path
     };
   }
 
@@ -35,21 +33,15 @@ class Main extends Component {
     }));
   }
 
-  handlCart() {
-    this.setState({
-      cart_count: storage.getCart().length,
-    });
-  }
-
   render() {
-    const childrenWithProps = React.Children.map(this.props.children,
-      child => React.cloneElement(child, {
-        handlCart: this.handlCart.bind(this),
-      }),
-    );
-
     return (
       <div>
+        {
+          this.state.title != this.props.main.title ?
+            <iframe src=""></iframe>
+            :
+            ''
+        }
         <TabBar
           unselectedTintColor="#949494"
           tintColor="#a72025"
@@ -67,7 +59,7 @@ class Main extends Component {
           <TabBar.Item
             title="购物车"
             key="cart"
-            badge={this.state.cart_count}
+            badge={this.props.main.cart_count}
             icon={require('../assets/svg/cart.svg')}
             selectedIcon={require('../assets/svg/cart_active.svg')}
             selected={this.state.selectedTab === 'cart'}
@@ -82,7 +74,7 @@ class Main extends Component {
             onPress={this.handlePress.bind(this, 'my')}
           />
         </TabBar>
-        {childrenWithProps}
+        {this.props.children}
       </div>
     );
   }
@@ -90,4 +82,4 @@ class Main extends Component {
 
 Main.propTypes = {};
 
-export default connect(() => ({}))(Main);
+export default connect(({main}) => ({main}))(Main);

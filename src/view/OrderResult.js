@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 
-import { NavBar, Result, Icon, Button } from 'antd-mobile';
+import { Result, Icon, Button } from 'antd-mobile';
 
 import http from '../util/http';
 import style from './style.css';
@@ -21,6 +21,13 @@ class OrderResult extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '交易反馈'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -79,7 +86,7 @@ class OrderResult extends Component {
   render() {
     return (
       <div className="result">
-        <NavBar className={style.header} mode="light" iconName={false}>交易反馈</NavBar>
+        {/*<NavBar className={style.header} mode="light" iconName={false}>交易反馈</NavBar>*/}
         <div className={style.page}>
           {
             this.state.result == 'confirm' ?

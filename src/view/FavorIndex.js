@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace} from 'antd-mobile';
+import {WhiteSpace} from 'antd-mobile';
 
 import http from '../util/http';
 import style from './style.css';
@@ -19,6 +19,13 @@ class FavorIndex extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的收藏'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     // this.handleLoad();
@@ -61,10 +68,10 @@ class FavorIndex extends Component {
   render() {
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >我的收藏</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>我的收藏</NavBar>*/}
         <div className={style.page}>
           <WhiteSpace size="lg"/>
           <view className={style.noData}>

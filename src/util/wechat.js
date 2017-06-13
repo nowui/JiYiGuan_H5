@@ -28,13 +28,6 @@ function auth() {
 
       storage.setOpenId(open_id);
       storage.setToken(token);
-      storage.setOpenId(open_id);
-      storage.setMember({
-        user_name: user_name,
-        user_avatar: user_avatar,
-        member_level_id: member_level_id,
-        member_level_value: member_level_value
-      });
     }
   }
 

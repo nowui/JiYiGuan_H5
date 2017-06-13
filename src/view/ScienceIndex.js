@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, List} from 'antd-mobile';
+import {List} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
@@ -19,6 +19,13 @@ class ScienceIndex extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '医学科普'
+      },
+    });
+
     document.body.scrollTop = this.props.science.scroll_top;
 
     if (this.props.science.list.length == 0) {
@@ -79,7 +86,7 @@ class ScienceIndex extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}>医学科普</NavBar>
+        {/*<NavBar className={style.header} mode="light" iconName={false}>医学科普</NavBar>*/}
         <div className={style.page}>
           <List>
             {

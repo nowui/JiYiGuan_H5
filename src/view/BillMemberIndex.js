@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Checkbox} from 'antd-mobile';
+import {WhiteSpace, List} from 'antd-mobile';
 
 import http from '../util/http';
 import style from './style.css';
@@ -18,6 +18,13 @@ class BillMember extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '团队账单'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -65,9 +72,9 @@ class BillMember extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" leftContent="返回"
-                onLeftClick={this.handleBack.bind(this)}
-        >他的账单</NavBar>
+        {/*<NavBar className={style.header} mode="light" leftContent="返回"*/}
+                {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>他的账单</NavBar>*/}
         <div className={style.page}>
           <WhiteSpace size="lg"/>
           {
