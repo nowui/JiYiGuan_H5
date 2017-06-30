@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
+import constant from '../util/constant';
 import http from '../util/http';
 import wechat from '../util/wechat';
 
@@ -27,8 +28,6 @@ class StoryDetail extends Component {
     document.body.scrollTop = 0;
 
     this.handleLoad();
-
-    wechat.share();
   }
 
   componentWillUnmount() {
@@ -45,6 +44,8 @@ class StoryDetail extends Component {
         this.setState({
           article: data
         });
+
+        wechat.share(constant.host + data.article_image_file.file_path, data.article_name, data.article_summary, 'http://h5.jiyiguan.nowui.com/#/story/detail/' + this.props.params.article_id);
       }.bind(this),
       complete: function () {
 

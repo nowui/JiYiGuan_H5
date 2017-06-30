@@ -33,7 +33,7 @@ class StoryIndex extends Component {
       this.handleLoad();
     }
 
-    wechat.share();
+    wechat.share('', '', '', 'http://h5.jiyiguan.nowui.com/#/science/index/');
   }
 
   componentWillUnmount() {

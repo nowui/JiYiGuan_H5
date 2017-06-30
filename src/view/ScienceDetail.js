@@ -27,8 +27,6 @@ class ScienceDetail extends Component {
     document.body.scrollTop = 0;
 
     this.handleLoad();
-
-    wechat.share();
   }
 
   componentWillUnmount() {
@@ -45,10 +43,12 @@ class ScienceDetail extends Component {
         this.setState({
           article: data
         });
+
+        wechat.share(constant.host + data.article_image_file.file_path, data.article_name, data.article_summary, 'http://h5.jiyiguan.nowui.com/#/science/detail/' + this.props.params.article_id);
       }.bind(this),
       complete: function () {
 
-      }.bind(this),
+      }.bind(this)
     });
   }
 

@@ -27,6 +27,23 @@ app.model(require('./model/science'));
 // 4. Router
 app.router(require('./router'));
 
+var url = location.href;
+
+if (url.indexOf('from=timeline&isappinstalled=0') > -1) {
+  url = url.replace('from=timeline&isappinstalled=0', '');
+  window.location.href = url;
+}
+
+if (url.indexOf('from=groupmessage&isappinstalled=0') > -1) {
+  url = url.replace('from=groupmessage&isappinstalled=0', '');
+  window.location.href = url;
+}
+
+if (url.indexOf('?from=singlemessage&isappinstalled=0') > -1) {
+  url = url.replace('?from=singlemessage&isappinstalled=0', '');
+  window.location.href = url;
+}
+
 setTimeout(() => {
   document.getElementById("loading").remove();
 

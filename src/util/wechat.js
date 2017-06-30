@@ -33,26 +33,46 @@ function auth() {
   }
 }
 
-function share() {
+function share(imgUrl, title, desc, link) {
+  if (imgUrl == '') {
+    imgUrl = 'http://api.jiyiguan.nowui.com/upload/6a4dbae2ac824d2fb170638d55139666/b3ee3776d78f445e84b436c28224a63c.jpg';
+  }
+  if (title == '') {
+    title = '广州市济颐馆贸易有限公司';
+  }
+  if (desc == '') {
+    desc = '广州市济颐馆贸易有限公司是一家营销特殊营养保健产品的专业公司，主要服务对象为妇女儿童人群，亚健康人群，及术后康复人群。我公司通过搭建完善的健康服务平台，为消费者提供名医诊疗，保健咨询，体质调理等具有特色的健康综合服务。';
+  }
+
   if (typeof(window.is_share) == 'undefined') {
     window.is_share = true;
   } else {
+    window.share_config = {
+      "share": {
+        "imgUrl": imgUrl,
+        "title": title,
+        "desc": desc,
+        "link": link,
+        "success": function () {
+
+        },
+        'cancel': function () {
+
+        }
+      }
+    };
+
+    wx.onMenuShareAppMessage(share_config.share);
+    wx.onMenuShareTimeline(share_config.share);
+    wx.onMenuShareQQ(share_config.share);
+
     return;
-  }
-
-  var url = location.href;
-  var title = '福特途睿欧 邀您坐享其程';
-  var desc = '纯正欧系、非凡商务，与您一起畅享全新移动商务休闲新体验！';
-
-  if (url.indexOf('/?from=') > -1) {
-    url = url.replace('#/', '');
-    url = url.replace('/?from=', '/#/?from=');
   }
 
   http.request({
     is_toast: false,
     is_response: false,
-    url: '/wechat/share?url=' + url,
+    url: '/wechat/share?url=' + location.href,
     data: {
 
     },
@@ -74,10 +94,10 @@ function share() {
 
       window.share_config = {
         "share": {
-          "imgUrl": "http://h5.fute.nowui.com/static/image/icon.jpg",
-          "desc": desc,
+          "imgUrl": imgUrl,
           "title": title,
-          "link": window.location.href,
+          "desc": desc,
+          "link": link,
           "success": function () {
 
           },
